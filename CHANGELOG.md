@@ -1,10 +1,27 @@
 # Changelog
 
+## v0.3.0: physicist guide and tool for your own data (2026-10-11), pre-release
+
+- **Physicist guide, `docs/physicist_guide/guide.pdf` (6 pages, TeX source included).**
+  - The bound in physics language, and which interactions it covers, with tiers.
+  - Exact floor values: Epstein-zeta closed forms and theta series.
+  - The evidence status, the numerical improvement (box count vs Voronoi, Figure 1), the estimator against exact
+    theory (Figure 2) and the skyrmion case study (Figure 3).
+  - Every number and figure is generated from `physics/results/` by `make_figures.py`; `build.sh` rebuilds the PDF.
+- **`physics/ubound.py`: test the bound on any 2D point file.**
+  - Uses the P2 Voronoi estimator and controls C1–C4, and gives each potential a verdict.
+  - Supports Gaussian and Riesz (Tier A) and Yukawa (Tier C, labelled as such).
+  - `--self-test` passes: the square-vs-triangle gap for Riesz s = 4 is 0.0421, against 0.0421 from closed forms.
+  - On the skyrmion data it reproduces the P2 gaps exactly.
+- **Correction.** The skyrmion counts are 1,619 and 4,225; v0.2.0 docs said 1,618 and 4,224. The data files and all
+  results JSON were always right. The P1 preregistration text keeps the old numbers as a historical record.
+
+
 ## v0.2.0: physical use case on real data (2026-10-11), pre-release
 
 - **`physics/`: real-data consistency check (Tier X) of the D2 energy bound.** The data are measured skyrmion-lattice
   positions from Zenodo doi:10.5281/zenodo.4450305 (CC-BY-4.0; arXiv:2004.09244), downloaded with an md5 check.
-  - **P2 (Voronoi density estimator): gate PASS.** Both snapshots (1,618 and 4,224 skyrmions) lie above the
+  - **P2 (Voronoi density estimator): gate PASS.** Both snapshots (1,619 and 4,225 skyrmions) lie above the
     triangular-lattice bound for all seven completely monotone potentials, with every gap above tolerance.
   - The controls reproduce theory: square vs triangle is +4.2% for Riesz s = 4, against 4.21% from closed forms.
   - The earlier P1 (preregistered) and P1b (post-hoc) runs failed their control-sensitivity gates. They are kept

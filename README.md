@@ -48,21 +48,39 @@ Full list: [LIMITATIONS.md](LIMITATIONS.md). For context, the most recent peer-l
 ([arXiv:2511.03353](https://arxiv.org/abs/2511.03353), November 2025) still describes the 2D conjecture as open. See
 [LITERATURE.md](LITERATURE.md).
 
-## Physical use case (Tier X, real data)
+## For physicists: guide (PDF) and a tool for your own data
+
+- **[Physicist guide (PDF, 6 pages)](docs/physicist_guide/guide.pdf)** ([TeX source](docs/physicist_guide/guide.tex)).
+  It covers:
+  - the bound in physics language, and which interactions it covers (Gaussian and Riesz s > 2: Tier A; Yukawa and
+    thin-film vortices: Tier C; Coulomb and Lennard-Jones: not covered);
+  - exact floor values (Epstein zeta and theta series);
+  - what is kernel-checked and what is conditional;
+  - how to test the bound on data;
+  - the skyrmion case study.
+- **`physics/ubound.py`** checks any 2D point file against the triangular-lattice floor, using the validated Voronoi
+  estimator and controls that say whether each answer is resolved:
+
+  ```bash
+  python3 physics/ubound.py --self-test
+  python3 physics/ubound.py positions.csv --potentials gauss:1,riesz:3,yukawa:1
+  ```
+- Rebuild the guide with `bash docs/physicist_guide/build.sh`. Every number and figure in it is generated from
+  `physics/results/`.
+
+### Physical use case (Tier X, real data)
 
 [`physics/`](physics/README.md) checks the D2 energy bound against measured skyrmion lattices. The data are two
-Kerr-microscopy snapshots with 1,618 and 4,224 skyrmions, from Zenodo
+Kerr-microscopy snapshots with 1,619 and 4,225 skyrmions, from Zenodo
 doi:[10.5281/zenodo.4450305](https://doi.org/10.5281/zenodo.4450305) (CC-BY-4.0, arXiv:2004.09244).
 
 - **Gate PASS (P2).** Density was estimated from Voronoi cells. Both configurations lie above the triangular-lattice
-  bound for all seven completely monotone potentials, with every gap above tolerance (for example +2.7% to +32% for
-  Riesz s = 3–6).
-- **The controls reproduce theory.** The square lattice comes out +4.2% above the triangular one for Riesz s = 4,
-  against the 4.21% from closed forms.
-- **Earlier runs are kept as they were.** The first preregistered run (P1) and its amendment (P1b) failed their
-  sensitivity gates because they used a box-count density estimator.
+  floor for every potential tested, with every gap above tolerance (for example +2.7% to +32% for Riesz s = 3–6).
+- **The estimator matches exact theory.** The square-lattice control reproduces the exact square-vs-triangle excess
+  within 6.2%.
+- **Earlier runs are kept as they were.** P1 and P1b used a box-count estimator and failed their sensitivity gates.
 - **Limits.** This is consistency evidence, not a validation of the theorem. Perturbed triangular lattices are
-  already predicted to lie above the bound by lattice-only and local optimality.
+  already predicted to lie above the floor by lattice-only and local optimality.
 
 ## Repository layout
 
@@ -70,7 +88,9 @@ doi:[10.5281/zenodo.4450305](https://doi.org/10.5281/zenodo.4450305) (CC-BY-4.0,
 lean/Triangular/        Lean sources (Riesz, RieszFinite, AnyDensity, Controls, UniversalOptimality, OpenDisk,
                         OpenDiskAny, Axioms, AxiomsD4)
 verification/           axiom-audit output, statement-fidelity audit, independent verification reports, ledger
-prereg/                 preregistrations (hypothesis + kill criterion, written before the Lean file)
+prereg/                 preregistrations (hypothesis + kill criterion, written before the Lean file or the run)
+physics/                real-data use case (P1, P1b, P2) and the ubound.py tool for your own data
+docs/physicist_guide/   physicist guide: guide.tex, guide.pdf, figure and number generator, build.sh
 tools/lean_pinned.py    the compile wrapper used, with machine paths replaced by environment variables
 BUILD.md                how to reproduce against the pinned upstream stack
 METHODOLOGY.md          pipeline, controls, and exactly who checked what

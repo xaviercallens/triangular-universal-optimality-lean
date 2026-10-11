@@ -11,3 +11,6 @@ __pycache__/
 .claude/
 physics/data/
 __pycache__/
+docs/physicist_guide/*.aux
+docs/physicist_guide/*.log
+docs/physicist_guide/*.out
