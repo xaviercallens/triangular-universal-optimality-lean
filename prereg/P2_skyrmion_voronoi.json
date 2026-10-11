@@ -1,0 +1,12 @@
+{
+  "id": "P2",
+  "follows": "P1 (GATE FAIL as preregistered) and P1b (post-hoc amendment, GATE FAIL): both failed on control sensitivity, not on data",
+  "stage": "preregistration of a new estimator, written after P1/P1b were seen and committed before P2 is run. Its data verdict cannot be blind, since P1/P1b already showed every data gap positive; the controls are what P2 must pass.",
+  "diagnosis": "P1/P1b density was the point count in an inner box divided by its area. Boundary placement makes that count fluctuate, giving a 3-10% apparent energy error on perfect lattices, more than the 1-4% square-vs-triangle difference for soft potentials.",
+  "single_estimator_change": "rho_hat = (number of inner points) / (sum of the Voronoi cell areas of those same inner points), the points whose energies are averaged; inner = farther than R_c from the bounding-box edge, so their cells are bounded. For a perfect lattice every cell has area exactly 1/rho. Iterate once, as in P1: initial rho from the box, then the Voronoi estimate after rescaling.",
+  "unchanged": "potentials (Gaussian alpha in {0.5, 1, 2, 4}; Riesz s in {3, 4, 6}); R_c = 6; Riesz uniform tail beyond R_c; per-potential tolerance tol_p = 3 x max over 20 C1 seeds of |C1 gap_p| (from P1b); controls C1-C4 with the same expectations word for word (C2 every jitter level > tol_p and increasing; C3 square > tol_p; C4 at least one potential < -tol_p; data gap_p >= -tol_p).",
+  "seed": 20261013,
+  "prediction": "C1 perfect-lattice error drops by at least 10x versus P1b, so that the controls pass for every potential/snapshot; data gaps stay >= -tol_p.",
+  "kill_criterion": "Any data gap < -tol_p is a FAIL and is investigated, not dropped. Any control failure is reported per potential as beyond resolution, and the gate is FAIL if any remain. No further estimator changes after this run without a new preregistration.",
+  "tier": "X: consistency evidence for the statement's physical reading. Perturbed triangular lattices are already predicted to lie above the bound by lattice-only and local optimality (arXiv:2511.03353), so this cannot discriminate the upstream global theorem."
+}
