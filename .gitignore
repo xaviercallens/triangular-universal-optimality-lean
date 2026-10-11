@@ -8,3 +8,4 @@ my_axioms.json
 VerifyScratch*
 .DS_Store
 __pycache__/
+.claude/
