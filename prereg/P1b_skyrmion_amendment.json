@@ -1,0 +1,11 @@
+{
+  "id": "P1b",
+  "amends": "P1 (prereg/P1_skyrmion.json; result committed unchanged as GATE FAIL in physics/results/P1_skyrmion.*)",
+  "stage": "amendment, written AFTER seeing P1's full output (data gaps and control gaps), committed before P1b is run. It is therefore NOT blind.",
+  "why": "P1's single tolerance (3 x max |C1 gap| over ALL potentials) was dominated by gauss_a4, whose energy is exponentially sensitive to nearest-neighbour spacing (a ~1% density error moves it by ~15%), giving tol = 0.25-0.31 per snapshot. That makes C2/C3 unable to exceed tol, so P1 failed its own control-sensitivity criterion.",
+  "single_change": "Tolerance is computed per potential: tol_p = 3 x max over the C1 seeds of |C1 gap_p|. Nothing else changes: same estimator, same potentials, same R_c, same controls C1-C4 with the same expectations word for word (C2: every jitter level > tol_p and increasing; C3: square > tol_p; C4: at least one potential < -tol_p; data: gap_p >= -tol_p).",
+  "fresh_randomness": "Control realisations use the new RNG seed 20261012 (P1 used 20261011), so the controls judged under the new rule are not the ones that motivated it.",
+  "what_cannot_change": "In P1 all 14 data gaps were positive, so the data criterion (gap >= -tol) is satisfied for any tol >= 0; this amendment cannot improve the data verdict. It can only change whether the controls show the estimator is sensitive enough, which is exactly what it must be judged on.",
+  "reporting": "Report raw data gap and bias-corrected gap (data gap - mean C1 gap) per potential. Potentials that still fail a control under P1b are reported as beyond the estimator's resolution, not dropped and not re-tuned. The exploratory Spearman correlation is reported as observed.",
+  "tier": "X (consistency evidence for the statement's physical reading); the configurations are perturbed triangular lattices, for which lattice-only optimality and local optimality (arXiv:2511.03353) already predict the same sign, so this cannot discriminate the upstream GLOBAL theorem from those known results."
+}

@@ -39,3 +39,7 @@ job-scratch paths replaced. `AxiomsD4.lean` was written for this repository.
 | `lean/Triangular/AxiomsD4.lean` | `c0412ba2718e05d614b4aeeab4ececba12e8413f3b47796d068087c26088727b` |
 | `verification/D4/verification.md` | `8c2dd2046afc464dc577c6dffdaeca2f44bf99fcc9aaa6d70116200e84aceae3` |
 | `prereg/D4.json` | `199914b68fa15e22a89d27f28ce6edaaad2f783473418c3135b73bde40c0c28c` |
+
+## v0.2.0
+
+`lean/Triangular/UniversalOptimality.lean` was edited in this repository: three docstrings were corrected and a Disclosure note added. Statements and proofs are unchanged. It now differs in comments only from the copy at AutoevolveAI `f81a2209`, from the Zenodo record and from LeanMaster v3.48.1. The sha256 values in the tables above are those of the copied versions.

@@ -25,7 +25,7 @@ On top of that theorem, this repository proves the following in the Lean kernel,
 | D4 | `TriangularOpenDisk.universal_energy_minimum_open` | Upstream's theorem holds unchanged if density and energy are counted in open disks instead of closed ones. `TriangularOpenDiskAny` shows both identities need no local-finiteness hypothesis. This is a robustness check of the formal statement for upstream's centred-disk liminf observables, not a physics result. | confirmed with corrections |
 
 Every module above was rebuilt from scratch against the pinned upstream stack on 2026-10-11, and the axiom gate passed.
-The record is in [`verification/rebuild_2026-10-11/SUMMARY.md`](verification/rebuild_2026-10-11/SUMMARY.md).
+The record is in [`verification/rebuild_2026-10-11/SUMMARY.md`](verification/rebuild_2026-10-11/SUMMARY.md). The v0.2.0 rebuild, after the docstring corrections, is in [`verification/rebuild_v0.2.0/SUMMARY.md`](verification/rebuild_v0.2.0/SUMMARY.md).
 
 "Confirmed with corrections" means a separate AI-agent instance recompiled the proofs, audited the axioms and checked
 the wording. It does **not** mean a human checked them. See [METHODOLOGY.md](METHODOLOGY.md).
@@ -47,6 +47,22 @@ the wording. It does **not** mean a human checked them. See [METHODOLOGY.md](MET
 Full list: [LIMITATIONS.md](LIMITATIONS.md). For context, the most recent peer-literature paper we found
 ([arXiv:2511.03353](https://arxiv.org/abs/2511.03353), November 2025) still describes the 2D conjecture as open. See
 [LITERATURE.md](LITERATURE.md).
+
+## Physical use case (Tier X, real data)
+
+[`physics/`](physics/README.md) checks the D2 energy bound against measured skyrmion lattices. The data are two
+Kerr-microscopy snapshots with 1,618 and 4,224 skyrmions, from Zenodo
+doi:[10.5281/zenodo.4450305](https://doi.org/10.5281/zenodo.4450305) (CC-BY-4.0, arXiv:2004.09244).
+
+- **Gate PASS (P2).** Density was estimated from Voronoi cells. Both configurations lie above the triangular-lattice
+  bound for all seven completely monotone potentials, with every gap above tolerance (for example +2.7% to +32% for
+  Riesz s = 3–6).
+- **The controls reproduce theory.** The square lattice comes out +4.2% above the triangular one for Riesz s = 4,
+  against the 4.21% from closed forms.
+- **Earlier runs are kept as they were.** The first preregistered run (P1) and its amendment (P1b) failed their
+  sensitivity gates because they used a box-count density estimator.
+- **Limits.** This is consistency evidence, not a validation of the theorem. Perturbed triangular lattices are
+  already predicted to lie above the bound by lattice-only and local optimality.
 
 ## Repository layout
 

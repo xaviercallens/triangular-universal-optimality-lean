@@ -1,0 +1,7 @@
+{
+  "file": "lean/Triangular/OpenDiskAny.lean",
+  "module": "Triangular.OpenDiskAny",
+  "rc": 0,
+  "seconds": 21.8,
+  "output": "lean/Triangular/OpenDiskAny.lean:23:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nlean/Triangular/OpenDiskAny.lean:33:10: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nlean/Triangular/OpenDiskAny.lean:33:22: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nlean/Triangular/OpenDiskAny.lean:42:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nlean/Triangular/OpenDiskAny.lean:49:10: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nlean/Triangular/OpenDiskAny.lean:56:10: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nlean/Triangular/OpenDiskAny.lean:95:6: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead\n"
+}
