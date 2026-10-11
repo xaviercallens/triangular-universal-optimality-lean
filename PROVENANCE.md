@@ -27,3 +27,15 @@ The copied source paths had no uncommitted changes at copy time.
 | `verification/ledger.json` | `d394a3c858ec1b80a915dde6252f39609646bf6579505a31fc6de8b338fe9334` |
 | `verification/manuscript_audit_2026-10-11.md` | `1f0f5aa92ac82b82a78d5ddbd2b0acc7eb5c9269d01cf9c32d23410b90a78ba3` |
 | `verification/statement_fidelity.md` | `439d228d4bd462b70d0b971c283a727cf9d56bf66dc0a8f06df9188e8bea1305` |
+
+## Added for v0.1.0 (2026-10-11T08:35Z)
+
+Copied from AutoevolveAI commit `f81a2209880097a1171ecb327b7bd9a6394a5a1d` via `git show` (source HEAD at copy time: `2f4b8e72be997ef2309356a84e8a95cf0300a109`);
+job-scratch paths replaced. `AxiomsD4.lean` was written for this repository.
+
+| File | sha256 |
+|---|---|
+| `lean/Triangular/OpenDiskAny.lean` | `ce07bddef4078805192bce87ea0733ddfddacbc04de0d2ba304a7db3af54eb1b` |
+| `lean/Triangular/AxiomsD4.lean` | `c0412ba2718e05d614b4aeeab4ececba12e8413f3b47796d068087c26088727b` |
+| `verification/D4/verification.md` | `8c2dd2046afc464dc577c6dffdaeca2f44bf99fcc9aaa6d70116200e84aceae3` |
+| `prereg/D4.json` | `199914b68fa15e22a89d27f28ce6edaaad2f783473418c3135b73bde40c0c28c` |

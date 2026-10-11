@@ -15,9 +15,9 @@ need careful reading.
 | T2 | **D3's definition.** Is `UniversallyOptimal` a fair reading of CKMRV Def. 1.3, apart from the stated liminf gap? | Another gap, or a witness that the liminf version is *strictly* weaker. | `lean/Triangular/UniversalOptimality.lean` |
 | **T3** | **Overclaiming.** Any sentence in this repo, the Zenodo records or the posts that says more than the Lean proves. | A quote plus the weaker statement it should be. | everything |
 | T4 | **Axiom or `sorry` leakage.** Anything besides the three standard axioms in a real theorem, or a proof that only goes through because of a junk value. | `#print axioms` output showing it. | `lean/Triangular/*.lean` |
-| T5 | **Reproduction.** Fresh clone, pinned stack, every file compiles, and the audit output matches ours. | A build failure, a different axiom list, or a stale-olean effect. | [BUILD.md](BUILD.md) |
+| T5 | **Reproduction on another machine.** Fresh clone, pinned stack, every file compiles, and the audit output matches `verification/rebuild_2026-10-11/`. | A build failure, a different axiom list, or a stale-olean effect. | [BUILD.md](BUILD.md) |
 | T6 | **Literature.** Is the 2D Cohn–Kumar conjecture still open apart from the upstream claim? Has anyone published an assessment of the upstream proof? | A citation. | arXiv, MathOverflow, Lean Zulip |
-| T7 | **D4 (open disks).** It is unaudited. Does it compile, and is it axiom-clean? | A compile log with `#print axioms`. | `lean/Triangular/OpenDisk.lean` |
+| T7 | **D4 scope.** Does the open/closed result say anything beyond upstream's centred-disk liminf observables? We say no. | A case where we overstate it, or a window convention under which it fails. | `lean/Triangular/OpenDisk*.lean`, `verification/D4/` |
 
 Out of scope: checking the upstream proof line by line. The Lean kernel already accepted it. The question for
 upstream is whether its *statement* means what it claims (T1).

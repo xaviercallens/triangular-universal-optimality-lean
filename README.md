@@ -22,7 +22,10 @@ On top of that theorem, this repository proves the following in the Lean kernel,
 | D2 | `TriangularDensity.triangular_optimal_any_density` | For every density `ρ > 0`, the rescaled lattice `ρ^(-1/2) A` has density `ρ` and attains the minimum. Without the rescaling the claim is false (`unscaled_false`). | confirmed with corrections |
 | D3 | `TriangularUniversalOptimality.triangular_universally_optimal` | `ρ^(-1/2) A` is universally optimal in the sense of CKMRV Def. 1.3, **using lower energy (liminf)**, which is a weaker notion. | confirmed with corrections |
 | D3 | `TriangularUniversalOptimality.universal_optimum_not_unique` | The lattice with one point removed is also a universal optimum (lower-energy sense) and is not an isometric copy of `A`. So "particles always arrange into a triangular lattice" is false as a uniqueness statement over *all* configurations. This is the remark after CKMRV Thm 1.4. | confirmed with corrections |
-| D4 | `TriangularOpenDisk.universal_energy_minimum_open` | Upstream's theorem holds unchanged if density and energy are counted in open disks instead of closed ones. | **preregistered; no compile log or axiom audit on record; treat as unverified** |
+| D4 | `TriangularOpenDisk.universal_energy_minimum_open` | Upstream's theorem holds unchanged if density and energy are counted in open disks instead of closed ones. `TriangularOpenDiskAny` shows both identities need no local-finiteness hypothesis. This is a robustness check of the formal statement for upstream's centred-disk liminf observables, not a physics result. | confirmed with corrections |
+
+Every module above was rebuilt from scratch against the pinned upstream stack on 2026-10-11, and the axiom gate passed.
+The record is in [`verification/rebuild_2026-10-11/SUMMARY.md`](verification/rebuild_2026-10-11/SUMMARY.md).
 
 "Confirmed with corrections" means a separate AI-agent instance recompiled the proofs, audited the axioms and checked
 the wording. It does **not** mean a human checked them. See [METHODOLOGY.md](METHODOLOGY.md).
@@ -41,12 +44,15 @@ the wording. It does **not** mean a human checked them. See [METHODOLOGY.md](MET
   It is not new mathematics. D2 is a standard rescaling. What these files add is a formal, auditable statement with
   named corollaries, controls and an audit trail.
 
-Full list: [LIMITATIONS.md](LIMITATIONS.md).
+Full list: [LIMITATIONS.md](LIMITATIONS.md). For context, the most recent peer-literature paper we found
+([arXiv:2511.03353](https://arxiv.org/abs/2511.03353), November 2025) still describes the 2D conjecture as open. See
+[LITERATURE.md](LITERATURE.md).
 
 ## Repository layout
 
 ```
-lean/Triangular/        Lean sources (Riesz, RieszFinite, AnyDensity, Controls, UniversalOptimality, OpenDisk, Axioms)
+lean/Triangular/        Lean sources (Riesz, RieszFinite, AnyDensity, Controls, UniversalOptimality, OpenDisk,
+                        OpenDiskAny, Axioms, AxiomsD4)
 verification/           axiom-audit output, statement-fidelity audit, independent verification reports, ledger
 prereg/                 preregistrations (hypothesis + kill criterion, written before the Lean file)
 tools/lean_pinned.py    the compile wrapper used, with machine paths replaced by environment variables

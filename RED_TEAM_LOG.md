@@ -13,6 +13,11 @@ One row per report. Outcomes: ACCEPTED-fixed, ACCEPTED-scope, DECLINED (with rea
 | 2026-10-10 | T3 | D3 verifier agent | "Previously solved only in dimensions 8 and 24" is wrong: d = 1 was solved earlier | ACCEPTED-fixed in paper | d50dfc43 |
 | 2026-10-11 | T3 | manuscript auditor agent | "Strictly weaker" unproven; "periodic uniqueness is open" unsourced ("not claimed by upstream"); "only the minimum value is determined" overreaches | **Fixed in the preprint and this repo's docs; still OPEN in the Lean docstrings** (see below) | — |
 
+| 2026-10-11 | T7 | D4 verifier agent | D4 identities need no `LocallyFinite` hypothesis; "settles guideline 4" holds only for upstream's centred-disk liminf observables | ACCEPTED-fixed (`OpenDiskAny.lean`, docstring scope note) | AutoevolveAI `f81a2209` |
+| 2026-10-11 | T5 | own clean rebuild (`verification/rebuild_2026-10-11/`) | Public commit `064cfa9` shipped `Axioms.lean` importing `Triangular.OpenDiskAny` without the file, so `Axioms.lean` did not compile from the repo | ACCEPTED-fixed in v0.1.0 (file added, rebuild gate re-run) | v0.1.0 |
+
+| 2026-10-11 | T6 | producer (web search) | First-pass literature check: arXiv:2511.03353 (November 2025) still calls the 2D conjecture open; no assessment of the upstream proof by a mathematician was found | ACCEPTED-scope (LITERATURE.md, L8); a systematic review stays open | v0.1.0 |
+
 ## Open at publication
 
 | Target | Where | Summary | Outcome |
