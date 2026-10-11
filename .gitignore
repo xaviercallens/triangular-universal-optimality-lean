@@ -1,6 +1,7 @@
 .lake/
 build/
 .olean_out/
+.olean_out.stale.*/
 *.olean
 *.ilean
 my_axioms.json

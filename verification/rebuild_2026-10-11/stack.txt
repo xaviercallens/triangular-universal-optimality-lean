@@ -1,0 +1,7 @@
+pinned_toolchain=leanprover/lean4:v4.34.1
+lean_version=Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+mathlib_rev=d13f23b723b8a846827a245b89c10fc7d3f11612
+challenge_sha256=af51979c7baecd3e9852637bbba29eff96cbb09cec84e15eff7d686f1a770616
+challenge_sha256_expected=af51979c7baecd3e9852637bbba29eff96cbb09cec84e15eff7d686f1a770616
+sha256 OAI/Analysis/Triangular/Energy/Basic.lean=1b201a3f0062fc596b738fe2bfdc7b6dde60e9cdaade41e5821b3a8dd752f330
+sha256 OAI/Analysis/Triangular/Energy/Universal.lean=35765ec2deda6020ae292681a4f56c6d73dfbcbdfbb7baa831e06e52dec82b1d

@@ -36,6 +36,7 @@ Each result went through these steps, in this order:
 | Upstream definitions match CKMRV | the producing AI agent (`statement_fidelity.md`); the verifier agents re-read them | **no** |
 | Our corollaries compile, axiom-clean | Lean kernel, run by producer and verifier agents | no |
 | Wording and overclaim review | verifier and auditor agents | **no** |
+| Clean rebuild of every module, stale oleans removed (`verification/rebuild_2026-10-11/`) | Lean kernel, original machine and pinned stack; source sha256 of upstream's challenge file matched the audited one | no |
 | Fresh-clone rebuild on another machine | **not done yet** | — |
 
 The "independent" verifiers were other instances of the same family of AI models. They are independent in process,
@@ -45,7 +46,10 @@ not in kind. No human mathematician has checked any step. This is the main reaso
 
 - The D2 commit accidentally included verifier scratch files, one with a `sorry`. They were removed, and the
   scratch-file pattern is now ignored.
-- The D3 verifier reused oleans built by the producer. Raw `lean` does not check that an olean matches its source, so
-  a clean rebuild of the whole chain is still recommended (red-team target T5).
-- D4 (`OpenDisk.lean`) was preregistered and written, but there is no compile log or axiom audit for it on record.
-  It is not imported by `Axioms.lean`.
+- The D3 verifier reused oleans built by the producer. Raw `lean` does not check that an olean matches its source.
+  This was closed on 2026-10-11 by a clean rebuild of the whole chain (`verification/rebuild_2026-10-11/`).
+- The first public commit (`064cfa9`) shipped an `Axioms.lean` that imports `Triangular.OpenDiskAny` but not the file
+  itself. The source changed between our review and the copy. The file was added in v0.1.0 and caught by our own
+  rebuild before release; see RED_TEAM_LOG.
+- D4 was verified by a separate agent (`verification/D4/verification.md`, ACCEPT_WITH_CORRECTIONS). Its correction was
+  that the identities need no local-finiteness hypothesis, and that is now proved in `OpenDiskAny.lean`.

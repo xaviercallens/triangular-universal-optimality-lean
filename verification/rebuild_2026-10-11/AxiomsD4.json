@@ -1,0 +1,7 @@
+{
+  "file": "lean/Triangular/AxiomsD4.lean",
+  "module": null,
+  "rc": 0,
+  "seconds": 14.1,
+  "output": "'TriangularOpenDisk.energy_eq_openEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TriangularOpenDisk.densityOne_iff_open' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TriangularOpenDisk.universal_energy_minimum_open' depends on axioms: [propext, Classical.choice, Quot.sound]\n'd4_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ctl_axiom_d4' depends on axioms: [ctl_cheat_d4, propext, Classical.choice, Quot.sound]\n"
+}

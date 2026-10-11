@@ -1,0 +1,7 @@
+{
+  "file": "lean/Triangular/AnyDensity.lean",
+  "module": "Triangular.AnyDensity",
+  "rc": 0,
+  "seconds": 14.6,
+  "output": "lean/Triangular/AnyDensity.lean:77:6: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nlean/Triangular/AnyDensity.lean:77:44: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead\n"
+}

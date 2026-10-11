@@ -1,0 +1,7 @@
+{
+  "file": "lean/Triangular/Controls.lean",
+  "module": "Triangular.Controls",
+  "rc": 0,
+  "seconds": 16.0,
+  "output": "lean/Triangular/Controls.lean:41:13: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\n"
+}

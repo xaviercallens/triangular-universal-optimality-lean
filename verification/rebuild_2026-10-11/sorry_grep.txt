@@ -1,0 +1,1 @@
+lean/Triangular/Axioms.lean:42: theorem ctl_sorry : TriangularRiesz.riesz 1 1 = 0 := by sorry

@@ -1,7 +1,8 @@
 # Reproducing the build
 
-**Status: no rebuild from a fresh clone has been done yet (red-team target T5).** The steps below describe how
-the original builds were run. Reports of what actually happens when you follow them are very welcome.
+**Status:** these steps were run on 2026-10-11 on the original machine, with stale oleans removed first; the results
+are in `verification/rebuild_2026-10-11/`. No rebuild from a fresh clone on another machine has been done yet
+(red-team target T5), so reports of what happens when you follow these steps are very welcome.
 
 These files are **not** a standalone Lake package. They compile as loose modules against upstream's pinned build,
 with the `lean` binary, in dependency order.
@@ -24,10 +25,11 @@ and over 12 minutes (under load) once upstream was built.
 ```bash
 export LEAN_TOOLCHAIN_BIN=$HOME/.elan/toolchains/leanprover--lean4---v4.34.1/bin   # adjust
 cd <this repo>
-for m in Riesz RieszFinite AnyDensity Controls UniversalOptimality OpenDisk; do
+for m in Riesz RieszFinite AnyDensity Controls UniversalOptimality OpenDisk OpenDiskAny; do
   python3 tools/lean_pinned.py compile lean/Triangular/$m.lean --olean Triangular.$m || break
 done
 python3 tools/lean_pinned.py compile lean/Triangular/Axioms.lean --json-out my_axioms.json
+python3 tools/lean_pinned.py compile lean/Triangular/AxiomsD4.lean --json-out my_axioms_d4.json
 ```
 
 ## 3. Check the axiom audit
@@ -38,7 +40,7 @@ Compare `my_axioms.json` with `verification/axiom_audit_Axioms.json`. You should
 - `ctl_sorry`: includes `sorryAx` (planted control);
 - `ctl_axiom`: includes `ctl_cheat` (planted control).
 
-`Axioms.lean` does not cover `OpenDisk.lean` (D4). To audit D4, add `import Triangular.OpenDisk` and
-`#print axioms TriangularOpenDisk.universal_energy_minimum_open` (plus `energy_eq_openEnergy` and `densityOne_iff_open`).
+`Axioms.lean` covers D1–D4, including `OpenDiskAny`. `AxiomsD4.lean` is a supplementary D4 audit with a non-vacuity
+theorem at `A` and its own planted-axiom control.
 
 Delete stale `.olean` files before rebuilding. Raw `lean` does not check that an olean matches its source.
