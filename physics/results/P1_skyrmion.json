@@ -1,0 +1,208 @@
+{
+  "provenance": {
+    "record": "4450305",
+    "doi": "10.5281/zenodo.4450305",
+    "license": "cc-by-4.0",
+    "file": "Skyrmion Lattice Phases Ascii Data.zip",
+    "checksum": "md5:4620d3342aca2fdf130c7ef02267451f",
+    "checksum_verified": "yes"
+  },
+  "lattice_energy_density1": {
+    "gauss_a0.5": {
+      "value": 1.0084779185979202,
+      "cross_check": 1.0084779185979202,
+      "rel_diff": 0.0
+    },
+    "gauss_a1": {
+      "value": 0.1595952669639284,
+      "cross_check": 0.1595952669639284,
+      "rel_diff": 0.0
+    },
+    "gauss_a2": {
+      "value": 0.0042389592989599935,
+      "cross_check": 0.0042389592989599935,
+      "rel_diff": 0.0
+    },
+    "gauss_a4": {
+      "value": 2.9947929979994028e-06,
+      "cross_check": 2.9947929979994028e-06,
+      "rel_diff": 0.0
+    },
+    "riesz_s3": {
+      "value": 8.892745100397288,
+      "cross_check": 8.892806921437703,
+      "rel_diff": 6.951851168217303e-06
+    },
+    "riesz_s4": {
+      "value": 5.783359299678671,
+      "cross_check": 5.783360332245359,
+      "rel_diff": 1.7854098883500804e-07
+    },
+    "riesz_s6": {
+      "value": 4.141256547203415,
+      "cross_check": 4.141256547491464,
+      "rel_diff": 6.95558685445714e-11
+    }
+  },
+  "snapshots": {
+    "330K_40uT": {
+      "n_points": 1619,
+      "n_inner": 792,
+      "rho_hat_per_um2": 0.013616254927808968,
+      "mean_spacing_um": 9.20885950584482,
+      "tol": 0.2509886221279651,
+      "C1_max_abs_gap": 0.08366287404265503,
+      "data_gap": {
+        "gauss_a0.5": 0.030904228870530747,
+        "gauss_a1": 0.2374707244865165,
+        "gauss_a2": 1.701315974520728,
+        "gauss_a4": 72.41309683986566,
+        "riesz_s3": 0.03474752894187284,
+        "riesz_s4": 0.09339363056869306,
+        "riesz_s6": 0.3005763996254381
+      },
+      "C2_jitter_gap": {
+        "0.05": {
+          "gauss_a0.5": 0.01909773470348565,
+          "gauss_a1": 0.09110142156273739,
+          "gauss_a2": 0.46540984555378606,
+          "gauss_a4": 3.8683262297839716,
+          "riesz_s3": 0.017656759674391696,
+          "riesz_s4": 0.03524019223914487,
+          "riesz_s6": 0.08765623308288673
+        },
+        "0.1": {
+          "gauss_a0.5": 0.06249267240553317,
+          "gauss_a1": 0.33734887324446805,
+          "gauss_a2": 2.358524469816613,
+          "gauss_a4": 71.16131684153564,
+          "riesz_s3": 0.05964912110822749,
+          "riesz_s4": 0.13978759140278862,
+          "riesz_s6": 0.40579599083487927
+        },
+        "0.2": {
+          "gauss_a0.5": 0.20205217137112497,
+          "gauss_a1": 1.2551916372426557,
+          "gauss_a2": 16.625845990226132,
+          "gauss_a4": 3746.288488403426,
+          "riesz_s3": 0.30240029817160896,
+          "riesz_s4": 0.9763490192466917,
+          "riesz_s6": 6.559507170264661
+        }
+      },
+      "C3_square_gap": {
+        "gauss_a0.5": 0.008092285320828077,
+        "gauss_a1": 0.13320659458627254,
+        "gauss_a2": 0.7751494459328712,
+        "gauss_a4": 3.7090539474566273,
+        "riesz_s3": 0.016891219041516452,
+        "riesz_s4": 0.04384637409516266,
+        "riesz_s6": 0.12793651633054715
+      },
+      "C4_mismatch_gap": {
+        "gauss_a0.5": -0.350729711927741,
+        "gauss_a1": -0.4659875974938975,
+        "gauss_a2": -0.4936620989794929,
+        "gauss_a4": 1.5793815944532665,
+        "riesz_s3": -0.30189721675646003,
+        "riesz_s4": -0.3530215203735545,
+        "riesz_s6": -0.4080216660785444
+      },
+      "exploratory_spearman_gauss1_excess_vs_psi6": {
+        "rho": 0.03671385435493951,
+        "p": 0.30210235283253306
+      }
+    },
+    "338K_20uT": {
+      "n_points": 4225,
+      "n_inner": 2832,
+      "rho_hat_per_um2": 0.035464316004372526,
+      "mean_spacing_um": 5.706093583888193,
+      "tol": 0.3125698844228266,
+      "C1_max_abs_gap": 0.10418996147427553,
+      "data_gap": {
+        "gauss_a0.5": 0.02462094025890187,
+        "gauss_a1": 0.15037355283774292,
+        "gauss_a2": 0.975573652900471,
+        "gauss_a4": 36.50533030886099,
+        "riesz_s3": 0.023710781871898106,
+        "riesz_s4": 0.059265927919322246,
+        "riesz_s6": 0.17747324761448888
+      },
+      "C2_jitter_gap": {
+        "0.05": {
+          "gauss_a0.5": 0.01491016938702479,
+          "gauss_a1": 0.08624658424567709,
+          "gauss_a2": 0.46566248322490417,
+          "gauss_a4": 3.7877161442795253,
+          "riesz_s3": 0.01420507977620133,
+          "riesz_s4": 0.0313183574717185,
+          "riesz_s6": 0.08361921320858082
+        },
+        "0.1": {
+          "gauss_a0.5": 0.05608731383896181,
+          "gauss_a1": 0.33647708021653655,
+          "gauss_a2": 2.4426083486041428,
+          "gauss_a4": 78.35651507680434,
+          "riesz_s3": 0.05481883060470934,
+          "riesz_s4": 0.13660677539268812,
+          "riesz_s6": 0.4134009976281501
+        },
+        "0.2": {
+          "gauss_a0.5": 0.1890541548890029,
+          "gauss_a1": 1.2206841198501464,
+          "gauss_a2": 16.890693533317798,
+          "gauss_a4": 4916.955987245955,
+          "riesz_s3": 0.4735217836850316,
+          "riesz_s4": 3.2720360892176568,
+          "riesz_s6": 264.8478972821095
+        }
+      },
+      "C3_square_gap": {
+        "gauss_a0.5": 0.0055686183612421855,
+        "gauss_a1": 0.12830551443834895,
+        "gauss_a2": 0.7604112544787749,
+        "gauss_a4": 3.6313282314249893,
+        "riesz_s3": 0.013025357401172956,
+        "riesz_s4": 0.040591197696050504,
+        "riesz_s6": 0.12344335329197065
+      },
+      "C4_mismatch_gap": {
+        "gauss_a0.5": -0.3546869685696921,
+        "gauss_a1": -0.5035731087818089,
+        "gauss_a2": -0.6296961088017419,
+        "gauss_a4": 0.3177561342165455,
+        "riesz_s3": -0.3093432686986021,
+        "riesz_s4": -0.37321542726667334,
+        "riesz_s6": -0.46405405206441114
+      },
+      "exploratory_spearman_gauss1_excess_vs_psi6": {
+        "rho": -0.05765793493333894,
+        "p": 0.0021437805755589834
+      }
+    }
+  },
+  "gate": "FAIL",
+  "problems": [
+    "330K_40uT gauss_a0.5: C2 jitter gaps ['1.91e-02', '6.25e-02', '2.02e-01'] not > tol and increasing",
+    "330K_40uT gauss_a0.5: C3 square gap 8.092e-03 <= tol",
+    "330K_40uT gauss_a1: C2 jitter gaps ['9.11e-02', '3.37e-01', '1.26e+00'] not > tol and increasing",
+    "330K_40uT gauss_a1: C3 square gap 1.332e-01 <= tol",
+    "330K_40uT riesz_s3: C2 jitter gaps ['1.77e-02', '5.96e-02', '3.02e-01'] not > tol and increasing",
+    "330K_40uT riesz_s3: C3 square gap 1.689e-02 <= tol",
+    "330K_40uT riesz_s4: C2 jitter gaps ['3.52e-02', '1.40e-01', '9.76e-01'] not > tol and increasing",
+    "330K_40uT riesz_s4: C3 square gap 4.385e-02 <= tol",
+    "330K_40uT riesz_s6: C2 jitter gaps ['8.77e-02', '4.06e-01', '6.56e+00'] not > tol and increasing",
+    "330K_40uT riesz_s6: C3 square gap 1.279e-01 <= tol",
+    "338K_20uT gauss_a0.5: C2 jitter gaps ['1.49e-02', '5.61e-02', '1.89e-01'] not > tol and increasing",
+    "338K_20uT gauss_a0.5: C3 square gap 5.569e-03 <= tol",
+    "338K_20uT gauss_a1: C2 jitter gaps ['8.62e-02', '3.36e-01', '1.22e+00'] not > tol and increasing",
+    "338K_20uT gauss_a1: C3 square gap 1.283e-01 <= tol",
+    "338K_20uT riesz_s3: C2 jitter gaps ['1.42e-02', '5.48e-02', '4.74e-01'] not > tol and increasing",
+    "338K_20uT riesz_s3: C3 square gap 1.303e-02 <= tol",
+    "338K_20uT riesz_s4: C2 jitter gaps ['3.13e-02', '1.37e-01', '3.27e+00'] not > tol and increasing",
+    "338K_20uT riesz_s4: C3 square gap 4.059e-02 <= tol",
+    "338K_20uT riesz_s6: C2 jitter gaps ['8.36e-02', '4.13e-01', '2.65e+02'] not > tol and increasing",
+    "338K_20uT riesz_s6: C3 square gap 1.234e-01 <= tol"
+  ]
+}

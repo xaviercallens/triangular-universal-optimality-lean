@@ -9,3 +9,5 @@ VerifyScratch*
 .DS_Store
 __pycache__/
 .claude/
+physics/data/
+__pycache__/
