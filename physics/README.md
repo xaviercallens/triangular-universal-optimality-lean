@@ -8,8 +8,8 @@ The data are two Kerr-microscopy snapshots of a 2D skyrmion lattice in a thin-fi
 
 | Snapshot | Skyrmions | Mean spacing |
 |---|---|---|
-| 330 K, 40 µT | 1,618 | 9.2 µm |
-| 338 K, 20 µT | 4,224 | 5.7 µm |
+| 330 K, 40 µT | 1,619 | 9.2 µm |
+| 338 K, 20 µT | 4,225 | 5.7 µm |
 
 Each file gives positions in µm and the measured local order |ψ₆|. Source:
 
@@ -88,6 +88,22 @@ the expected sign. At 330 K the correlation is +0.037 (p = 0.30), the opposite s
 - It cannot separate the global theorem from results that were already known. These configurations are perturbed
   triangular lattices, and lattice-only optimality plus local optimality
   ([arXiv:2511.03353](https://arxiv.org/abs/2511.03353)) already predict that they sit above the lattice.
+
+## Use it on your own data
+
+`ubound.py` packages the P2 estimator and its controls for any 2D point file. Every potential gets one of four
+verdicts: *above the bound (resolved)*, *at the bound within tolerance*, *unresolved* (the controls failed, so the
+number means nothing) or *below the bound*.
+
+```bash
+python3 physics/ubound.py --self-test        # perfect lattice at the bound; square above; wrong density below
+python3 physics/ubound.py positions.csv --cols 0,1 --potentials gauss:1,riesz:3,riesz:6,yukawa:1 --json out.json
+```
+
+Yukawa (`yukawa:K`) is labelled Tier C, because its complete monotonicity is a written argument and not
+kernel-checked. On the skyrmion snapshots it resolves κ = 1 and 2 (+1.5% to +5.5%) and reports κ = 0.5 as
+unresolved. See `results/ubound_*.json` and the
+[physicist guide](../docs/physicist_guide/guide.pdf).
 
 ## Reproduce
 

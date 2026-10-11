@@ -1,0 +1,128 @@
+{
+  "n_points": 1619,
+  "density_per_unit_area": 0.013537297804724806,
+  "seed": 20261013,
+  "potentials": {
+    "gauss:0.5": {
+      "tier": "A",
+      "gap": 0.04197865045186448,
+      "tol": 7.265872487038056e-15,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.014123828953872467,
+        0.05750175393642165,
+        0.19135159286974826
+      ],
+      "C3_square": 0.006434966966130903,
+      "C4_density_x1.3": -0.3437549681164522,
+      "lattice_energy_density1": 1.0084779185979202
+    },
+    "gauss:1": {
+      "tier": "A",
+      "gap": 0.25994601506669346,
+      "tol": 1.3043420464609803e-14,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.0817682897984504,
+        0.3413481458149498,
+        1.2824018004987932
+      ],
+      "C3_square": 0.12998713838335182,
+      "C4_density_x1.3": -0.4562887143750881,
+      "lattice_energy_density1": 0.1595952669639284
+    },
+    "riesz:3": {
+      "tier": "A",
+      "gap": 0.04312833117148921,
+      "tol": 0.01224354142620287,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.013281617747577698,
+        0.055325873259168476,
+        0.4052325904977115
+      ],
+      "C3_square": 0.015654351536075025,
+      "C4_density_x1.3": -0.2962430245997591,
+      "lattice_energy_density1": 8.892745100397288
+    },
+    "riesz:4": {
+      "tier": "A",
+      "gap": 0.10609779404905974,
+      "tol": 0.003125521425991372,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.029492354028451576,
+        0.13896772017530215,
+        1.7780912645350304
+      ],
+      "C3_square": 0.04204192423391056,
+      "C4_density_x1.3": -0.3455042638762961,
+      "lattice_energy_density1": 5.783359299678671
+    },
+    "riesz:6": {
+      "tier": "A",
+      "gap": 0.32346477372391114,
+      "tol": 0.0001200872677194881,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.07902290744849941,
+        0.42316512210441154,
+        35.367096215048065
+      ],
+      "C3_square": 0.1249975488927521,
+      "C4_density_x1.3": -0.397603653289071,
+      "lattice_energy_density1": 4.141256547203415
+    },
+    "yukawa:0.5": {
+      "tier": "C",
+      "gap": 0.009949955526237437,
+      "tol": 0.02134015174502108,
+      "resolved": false,
+      "verdict": "unresolved (controls fail: estimator too coarse for this potential)",
+      "C2_jitter": [
+        0.004505513579815263,
+        0.011064621061723415,
+        0.04271400025411022
+      ],
+      "C3_square": 0.0018608223646093228,
+      "C4_density_x1.3": -0.2538699380728091,
+      "lattice_energy_density1": 9.117252728828891
+    },
+    "yukawa:1": {
+      "tier": "C",
+      "gap": 0.021882959597194405,
+      "tol": 0.0029370802873395366,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.005649848675230119,
+        0.024075056803895253,
+        0.10914041393141659
+      ],
+      "C3_square": 0.005800611230793955,
+      "C4_density_x1.3": -0.2777886984629538,
+      "lattice_energy_density1": 3.2506426792125493
+    },
+    "yukawa:2": {
+      "tier": "C",
+      "gap": 0.05496675361589318,
+      "tol": 2.8729363727184462e-05,
+      "resolved": true,
+      "verdict": "above the bound (resolved)",
+      "C2_jitter": [
+        0.015862205294690068,
+        0.06951113174990103,
+        0.3350666688230117
+      ],
+      "C3_square": 0.018882481308778537,
+      "C4_density_x1.3": -0.32488757181874983,
+      "lattice_energy_density1": 0.7870856978647822
+    }
+  },
+  "test_can_fail": true
+}
