@@ -48,6 +48,19 @@ Full list: [LIMITATIONS.md](LIMITATIONS.md). For context, the most recent peer-l
 ([arXiv:2511.03353](https://arxiv.org/abs/2511.03353), November 2025) still describes the 2D conjecture as open. See
 [LITERATURE.md](LITERATURE.md).
 
+## Physical use case (Tier X, real data)
+
+[`physics/`](physics/README.md) checks the D2 energy bound against measured skyrmion lattices. The data are two
+Kerr-microscopy snapshots with 1,618 and 4,224 skyrmions, from Zenodo
+doi:[10.5281/zenodo.4450305](https://doi.org/10.5281/zenodo.4450305) (CC-BY-4.0).
+
+- Neither measured configuration falls below the triangular-lattice bound, for any of the seven completely monotone
+  potentials tested.
+- The preregistered experiment **failed its own control-sensitivity gate** (P1), and so did a disclosed post-hoc
+  amendment (P1b). The finite-window estimator has an error of about 3–10%, so for soft potentials it cannot resolve
+  a triangular from a square arrangement.
+- This is consistency evidence for the physical reading of the bound. It does not validate the theorem.
+
 ## Repository layout
 
 ```

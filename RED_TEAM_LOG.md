@@ -18,6 +18,8 @@ One row per report. Outcomes: ACCEPTED-fixed, ACCEPTED-scope, DECLINED (with rea
 
 | 2026-10-11 | T6 | producer (web search) | First-pass literature check: arXiv:2511.03353 (November 2025) still calls the 2D conjecture open; no assessment of the upstream proof by a mathematician was found | ACCEPTED-scope (LITERATURE.md, L8); a systematic review stays open | v0.1.0 |
 
+| 2026-10-11 | T3 | producer (P1 run) | Real-data check P1 failed its own control-sensitivity gate as preregistered: the single tolerance across potentials was too loose. The post-hoc P1b (per-potential tolerance, fresh seed) also failed for 8 of 14 potential–snapshot pairs. No data gap was below the bound. | ACCEPTED-scope: reported as FAIL with the resolved subset named; no "validated" wording | physics/ |
+
 ## Open at publication
 
 | Target | Where | Summary | Outcome |
