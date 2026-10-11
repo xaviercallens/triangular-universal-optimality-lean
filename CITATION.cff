@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use these Lean corollaries, please cite the Zenodo record and the upstream openai/math theorem they depend on."
+title: "Triangular-lattice universal optimality: kernel-checked Lean corollaries (red-team review)"
+authors:
+  - family-names: Callens
+    given-names: Xavier
+    affiliation: SocrateAI Lab
+repository-code: "https://github.com/xaviercallens/triangular-universal-optimality-lean"
+license: MIT
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23285631
+    description: "D1, D1b, D2 paper"
+  - type: doi
+    value: 10.5281/zenodo.23293429
+    description: "D3 tiered preprint (v2)"
+keywords:
+  - Lean 4
+  - universal optimality
+  - triangular lattice
+  - Cohn-Kumar conjecture
+  - formal verification

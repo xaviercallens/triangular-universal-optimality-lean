@@ -1,0 +1,9 @@
+.lake/
+build/
+.olean_out/
+*.olean
+*.ilean
+my_axioms.json
+VerifyScratch*
+.DS_Store
+__pycache__/

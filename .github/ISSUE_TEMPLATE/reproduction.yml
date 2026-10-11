@@ -1,0 +1,38 @@
+name: Reproduction or axiom problem (T4/T5/T7)
+description: A build fails, an axiom list differs, a sorry leaks, or D4 does not check.
+title: "[T5] "
+labels: ["red-team", "reproduction"]
+body:
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Lean toolchain, openai/math commit, this repo's commit
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Exact commands run
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output (paste what you actually got, trimmed)
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected (e.g. from verification/axiom_audit_Axioms.json)
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: Disclosure
+      options:
+        - label: I ran these commands myself (required for output in this report)
+          required: true
+        - label: I used an AI tool to help write this report

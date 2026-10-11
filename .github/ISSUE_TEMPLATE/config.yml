@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: What to attack (red-team targets T1–T7)
+    url: https://github.com/xaviercallens/triangular-universal-optimality-lean/blob/main/RED_TEAM.md
+    about: Read this first. Literature pointers (T6) can be a plain issue.

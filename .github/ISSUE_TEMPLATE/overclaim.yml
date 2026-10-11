@@ -1,0 +1,30 @@
+name: Overclaim (T3)
+description: A sentence in this repo, a Zenodo record or a post says more than the Lean proves.
+title: "[T3] "
+labels: ["red-team", "overclaim"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: File and line, Zenodo DOI, or post link
+    validations:
+      required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: Exact quote
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: What it should say, and why
+    validations:
+      required: true
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: Disclosure
+      options:
+        - label: I used an AI tool to help write this report

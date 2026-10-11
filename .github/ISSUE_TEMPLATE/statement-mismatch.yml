@@ -1,0 +1,41 @@
+name: Statement mismatch (T1/T2)
+description: A Lean definition or statement does not mean what Cohn–Kumar / CKMRV mean.
+title: "[T1] "
+labels: ["red-team", "statement-fidelity"]
+body:
+  - type: input
+    id: lean
+    attributes:
+      label: Lean definition or theorem
+      description: File and line, e.g. upstream OAI/Analysis/Triangular/Energy/Basic.lean:42 or lean/Triangular/UniversalOptimality.lean:30
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference statement
+      description: The source you compare against, e.g. CKMRV Def. 1.2, with page or section
+    validations:
+      required: true
+  - type: textarea
+    id: mismatch
+    attributes:
+      label: The mismatch
+      description: What the Lean says, what the reference says, and why the difference matters. A concrete configuration or potential that separates them is the strongest report.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Your assessment
+      options:
+        - Changes what is proved (the claim is wrong or vacuous)
+        - Weakens the claim (should become a stated limitation)
+        - Cosmetic / wording only
+        - Not sure
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: Disclosure
+      options:
+        - label: I used an AI tool to help write this report
