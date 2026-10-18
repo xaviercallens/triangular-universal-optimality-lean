@@ -1,20 +1,23 @@
 \documentclass[11pt, a4paper]{article}
 
 % --- UNIVERSAL PREAMBLE BLOCK ---
+% Compile with LuaLaTeX (bidi=basic and onchar= require the LuaTeX engine).
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
 \usepackage{fontspec}
 
 \usepackage[english, bidi=basic, provide=*]{babel}
 \babelprovide[import, onchar=ids fonts]{english}
 
-% Set default/Latin font to Sans Serif in the main (rm) slot
-\babelfont{rm}{Noto Sans}
+% Set default/Latin font to Sans Serif in the main (rm) slot.
+% Falls back to DejaVu Sans on machines where Noto Sans is not installed.
+\IfFontExistsTF{Noto Sans}{\babelfont{rm}{Noto Sans}}{\babelfont{rm}{DejaVu Sans}}
 
 % --- ESSENTIAL MATH & FORMATTING PACKAGES ---
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{booktabs}
+\usepackage{array}
 \usepackage{enumitem}
 \usepackage{hyperref}
 
@@ -23,13 +26,14 @@
     linkcolor=blue,
     urlcolor=blue,
     citecolor=blue,
-    pdftitle={Universal Optimality of the Planar Triangular Lattice: Complete Human Proof and Math Sup/Spe Reference}
+    pdftitle={Universal Optimality of the Planar Triangular Lattice: Conditional Corollaries, Pen-and-Paper Proofs, and a Math Sup/Spe Reference}
 }
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{importedclaim}[theorem]{Imported Claim}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
@@ -48,10 +52,11 @@
 \newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
 
 \title{\textbf{Universal Optimality of the Planar Triangular Lattice}\\[0.4em]
-\large Complete Pen-and-Paper Mathematical Proofs, Corollaries (D1--D4),\\
+\large Conditional Corollaries (D1--D4) with Complete Pen-and-Paper Proofs,\\
 and a \textit{Math Sup / Math Sp\'e} Foundational Reference Appendix}
 \author{Prepared for Print \& Pen-and-Paper Peer Review\\
-\small Based on the \texttt{openai/math} Release \& the \textit{SocrateAI-Scientific-Elenchus} Textbook}
+\small Based on the \texttt{openai/math} release (AI-generated, not peer reviewed)\\
+\small \& the \textit{SocrateAI-Scientific-Elenchus} Textbook}
 \date{October 2026}
 
 \begin{document}
@@ -59,13 +64,27 @@ and a \textit{Math Sup / Math Sp\'e} Foundational Reference Appendix}
 \maketitle
 
 \begin{abstract}
-\noindent This document provides a self-contained, human-readable mathematical exposition of the universal optimality of the two-dimensional triangular (hexagonal) lattice $A \subset \R^2$. We present the complete pen-and-paper proofs showing that $A$ minimizes the lower pair-interaction energy per particle among all locally finite planar configurations of a given density, simultaneously for every completely monotone potential of squared distance. In Part~I through Part~IV, we detail the linear-programming bound, the construction of the 2D Gaussian auxiliary functions (which bypasses the modular-form roadblock of dimensions $8$ and $24$), the passage from Gaussians to general completely monotone potentials, and the full proofs of the four formal extensions: Riesz potentials and Epstein zeta finiteness (D1 \& D1b), scaling to arbitrary densities (D2), the vacancy theorem and non-uniqueness of minimizers (D3), and the equivalence of open and closed disk boundaries (D4). Part~V provides a rigorous foundational Appendix written specifically as a refresher for readers trained in the French \textit{Math Sup / Math Sp\'e} (\textit{Classes Pr\'eparatoires}) curriculum, bridging classic linear algebra and real analysis to modern measure theory, 2D Poisson summation, and cardinal sine-product interpolation.
+\noindent This document is a self-contained, human-readable exposition of the universal optimality statement for the two-dimensional triangular (hexagonal) lattice $A \subset \R^2$: $A$ minimizes the lower pair-interaction energy per particle among all locally finite planar configurations of density one, simultaneously for every completely monotone potential of squared distance. The statement is \emph{not} proved here in full. Its entire difficulty---the existence, for every $\alpha > 0$, of a sharp two-dimensional auxiliary function for the Gaussian $G_\alpha$---is imported from the \texttt{openai/math} release as Imported Claim~\ref{claim:gauss_imported}, an AI-generated and not yet peer-reviewed result; as of November 2025 the conjecture is still described as open in the literature~\cite{Leble25}. Everything downstream of that claim is proved completely: the Cohn--Kumar linear-programming bound for periodic configurations (Section~\ref{sec:lp}), the passage from Gaussians to all completely monotone potentials via Bernstein, Fatou and Tonelli (Section~\ref{sec:gauss_to_cm}), and the four extensions (Section~\ref{sec:corollaries}): Riesz potentials and the Epstein zeta threshold (D1 \& D1b), rescaling to arbitrary densities (D2), the vacancy theorem and non-uniqueness of minimizers (D3), and the equivalence of open and closed disk boundaries (D4). Part~V is a foundational appendix written for readers trained in the French \textit{Math Sup / Math Sp\'e} (\textit{Classes Pr\'eparatoires}) curriculum, bridging classical linear algebra and real analysis to measure theory, two-dimensional Poisson summation, and the double-zero structure of auxiliary functions.
 \end{abstract}
+
+\begin{center}
+\fbox{\begin{minipage}{0.94\linewidth}
+\label{box:status}%
+\textbf{Epistemic status (read this first).}
+\begin{itemize}[leftmargin=*, nosep]
+    \item \textbf{Proved here, unconditionally:} Propositions~\ref{prop:gram} and~\ref{prop:dual_A}; Theorem~\ref{thm:lp_periodic} (LP bound, periodic case); Proposition~\ref{prop:periodic_disk}; Lemma~\ref{lem:energy_one}; the derivation of Theorem~\ref{thm:main} from Imported Claim~\ref{claim:gauss_imported} (Section~\ref{sec:gauss_to_cm}); Results D1--D4 as consequences of Theorem~\ref{thm:main} (Section~\ref{sec:corollaries}); every statement in the Appendix.
+    \item \textbf{Standard, cited but not reproduced:} Bernstein's representation theorem (Theorem~\ref{thm:bernstein}, \cite{Bernstein29, Widder41}); the linear-programming bound for \emph{arbitrary} locally finite configurations (Proposition~\ref{prop:lp_general}, \cite[Prop.~2.2]{CdCI18}).
+    \item \textbf{Imported and \emph{not} verified in this document:} Imported Claim~\ref{claim:gauss_imported}---the existence, for every $\alpha > 0$, of a sharp 2D auxiliary function (Definition~\ref{def:aux}). Its source is the theorem \texttt{OAI.\allowbreak AtomicTriangular.\allowbreak universal\_energy\_minimum} of the \texttt{openai/math} release~\cite{OAI26}, which is AI-generated. The Lean kernel accepts that proof against the release's own definitions, but the fidelity of those definitions to the Cohn--Kumar/CKMRV notions and the accompanying manuscript have not been peer reviewed~\cite{repo}. Among \emph{lattices}, the result is Montgomery's theorem~\cite{Montgomery88}; among all configurations it is, in the peer-reviewed literature, an open conjecture~\cite{Leble25}.
+    \item \textbf{Consequently}, Theorem~\ref{thm:main} and Results D1--D4 are \emph{conditional} on Imported Claim~\ref{claim:gauss_imported}. Nothing in this document should be cited as a proof of the two-dimensional universal optimality conjecture.
+\end{itemize}
+\end{minipage}}
+\end{center}
 
 \tableofcontents
 \newpage
 
 \section{The Mathematical Setup and Definitions}
+\label{sec:setup}
 
 We work in the Euclidean plane $\R^2$ equipped with the standard scalar product $\inner{x}{y} = x_1 y_1 + x_2 y_2$ and Euclidean norm $\norm{x} = \sqrt{x_1^2 + x_2^2}$. For any radius $R \in \R$, we denote by
 \[
@@ -86,6 +105,7 @@ is a finite set for every $R \in \R$. When $C$ is locally finite, we denote by $
 \end{definition}
 
 \begin{definition}[Centred density]
+\label{def:density}
 A locally finite configuration $C \subseteq \R^2$ has \textbf{centred density $\rho$} (for $\rho > 0$) if
 \[
 \lim_{R \to \infty} \frac{N_R(C)}{\pi R^2} = \rho.
@@ -94,7 +114,7 @@ In particular, $C$ has \textbf{density one} if $\lim_{R \to \infty} \frac{N_R(C)
 \end{definition}
 
 \begin{remark}[Statement-adequacy notes for reviewers]
-Notice two features of Definition 1.2:
+Notice two features of Definition~\ref{def:density}:
 \begin{enumerate}[label=(\roman*)]
     \item \textit{Centred vs.\ uniform density:} The limit is taken over disks centered at the origin $0$. For any other fixed center $c \in \R^2$, the triangle inequality gives $\Bbar(0, R - \norm{c}) \subseteq \Bbar(c, R) \subseteq \Bbar(0, R + \norm{c})$, which implies $\lim_{R \to \infty} \operatorname{card}(C \cap \Bbar(c, R))/(\pi R^2) = \rho$ as well. However, centred density does not prevent sparse, localized clusters far from the origin (e.g., placing $k^2$ points in a unit disk around $(2^k, 0)$ for each $k \ge 1$ adds only $O((\log R)^3)$ points inside radius $R$, leaving the asymptotic density unchanged).
     \item \textit{Closed vs.\ open disks:} Counting points in $\Bbar(0, R)$ vs.\ $\Bopen(0, R)$ can differ on the boundary circle $\norm{x} = R$. In Section~\ref{sec:D4}, we prove (Result D4) that for locally finite configurations, open and closed disks yield the exact same asymptotic density and lower energy.
@@ -166,12 +186,12 @@ Computing the four scalar products with $v_1$ and $v_2$ yields:
 \[
 \inner{J v_1}{v_1} = 0, \quad \inner{J v_1}{v_2} = \frac{b}{b} = 1, \quad \inner{J v_2}{v_1} = -\frac{b}{b} = -1, \quad \inner{J v_2}{v_2} = \frac{1}{b}\left(-\frac{b}{2} + \frac{b}{2}\right) = 0.
 \]
-Since all four scalar products are in $\Z$, every integer combination of $J v_1$ and $J v_2$ has integer inner product with every point of $A$, so $J(A) \subseteq A^*$. Moreover, $(J v_1, J v_2)$ is the dual basis up to sign, so $\abs{\det(J v_1, J v_2)} = \abs{\det(v_1, v_2)} = 1 = \abs{A^*}$. Because $J(A)$ is a sublattice of $A^*$ of the exact same covolume, $J(A) = A^*$.
+Since all four scalar products are in $\Z$, bilinearity shows that every integer combination of $J v_1$ and $J v_2$ has integer inner product with every point of $A$, so $J(A) \subseteq A^*$. Moreover, these relations say exactly that $J v_1 = v_2^*$ and $J v_2 = -v_1^*$, where $(v_1^*, v_2^*)$ is the dual basis of $(v_1, v_2)$ (Appendix~\ref{app:gram}); so $(J v_1, J v_2)$ is the dual basis up to sign and order, and since $J$ is a rotation, $\abs{\det(J v_1, J v_2)} = \abs{\det(v_1, v_2)} = 1 = \abs{A^*}$. Because $J(A)$ is a sublattice of $A^*$ of the exact same covolume, $J(A) = A^*$.
 \end{proof}
 
 \subsection{Admissible Potentials and Lower Energy}
 
-Following Cohn--Kumar and CKMRV, we write any pair potential as a function $g(t)$ of the \textbf{squared distance} $t = \norm{x - y}^2$. Thus, an interaction $V(r)$ at distance $r = \norm{x - y}$ corresponds to $g(t) = V(\sqrt{t})$.
+Following Cohn--Kumar~\cite{CK07} and CKMRV~\cite{CKMRV22}, we write any pair potential as a function $g(t)$ of the \textbf{squared distance} $t = \norm{x - y}^2$. Thus, an interaction $V(r)$ at distance $r = \norm{x - y}$ corresponds to $g(t) = V(\sqrt{t})$.
 
 \begin{definition}[Completely monotone / admissible potential]
 \label{def:admissible}
@@ -184,9 +204,11 @@ A function $g : (0, \infty) \to \R$ is \textbf{completely monotone} (called \tex
     (-1)^r g^{(r)}(t) \ge 0.
     \]
 \end{enumerate}
+(Condition (ii) is the case $r = 0$ of (iii); it is kept for readability.)
 \end{definition}
 
 \begin{definition}[Disk energy, lower energy, and lattice energy]
+\label{def:energies}
 Let $g : (0, \infty) \to [0, \infty)$ and let $C \subseteq \R^2$ be locally finite. We work in the extended non-negative real numbers $[0, \infty] = \R_{\ge 0} \cup \{\infty\}$ with the conventions $1/0 = \infty$ and $\infty \cdot 0 = 0$.
 \begin{enumerate}[label=(\roman*)]
     \item The \textbf{disk energy} of $C$ at radius $R$ is the ordered-pair average
@@ -207,17 +229,18 @@ Let $g : (0, \infty) \to [0, \infty)$ and let $C \subseteq \R^2$ be locally fini
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Main Theorem: 2D Universal Energy Minimum]
+\begin{theorem}[Main Theorem: 2D Universal Energy Minimum --- conditional on Imported Claim~\ref{claim:gauss_imported}]
 \label{thm:main}
-Let $g$ be an admissible potential (Definition~\ref{def:admissible}) and let $C \subseteq \R^2$ be any locally finite configuration of centred density one. Then
+Assume Imported Claim~\ref{claim:gauss_imported}. Let $g$ be an admissible potential (Definition~\ref{def:admissible}) and let $C \subseteq \R^2$ be any locally finite configuration of centred density one. Then
 \[
 \Ecal_g(A) \le E_g(C) \qquad \text{and} \qquad \Ecal_g(A) = E_g(A) \qquad \text{in } [0, \infty].
 \]
 \end{theorem}
 
-\noindent The next two sections give the human mathematical proof of Theorem~\ref{thm:main}.
+\noindent Sections~\ref{sec:lp} and~\ref{sec:gauss_to_cm} give the human mathematical derivation of Theorem~\ref{thm:main} from Imported Claim~\ref{claim:gauss_imported}; Section~\ref{sec:nonperiodic} states precisely what that claim asserts and why it is not proved here.
 
 \section{The Linear Programming Bound and the 2D Auxiliary Function}
+\label{sec:lp}
 
 We normalize the Fourier transform of a Schwartz function $f \in \Scal(\R^2)$ as
 \[
@@ -252,7 +275,7 @@ E_g^{\text{per}}(C) = \frac{1}{N} \sum_{m=1}^N \sum_{n=1}^N \sum_{\substack{\lam
 \]
 \end{definition}
 
-\begin{theorem}[Cohn--Elkies--Kumar LP Bound, Periodic Case]
+\begin{theorem}[Cohn--Kumar LP Bound~\cite{CK07}, Periodic Case]
 \label{thm:lp_periodic}
 Let $\alpha > 0$, let $f_\alpha$ be an auxiliary function for $G_\alpha$ satisfying (i)--(ii) of Definition~\ref{def:aux}, and let $C = \bigcup_{m=1}^N (\Lambda + v_m)$ be any periodic configuration of density one (so $\abs{\Lambda} = N$). Then
 \begin{equation}
@@ -318,7 +341,7 @@ For each $x \in C$, let $e(x) = \sum_{y \in C \setminus \{x\}} G_\alpha(x - y)$.
 E_{g_\alpha}(C; R) \le \frac{1}{N_R(C)} \sum_{x \in C_R} e(x) = \sum_{m=1}^N \frac{n_m(R)}{N_R(C)} e_m \xrightarrow[R \to \infty]{} \frac{1}{N} \sum_{m=1}^N e_m = E_{g_\alpha}^{\text{per}}(C).
 \]
 
-\noindent \textit{Lower bound:} For any $L > 0$, define the Gaussian tail $\tau(L) = \sup_{u \in \R^2} \sum_{\lambda \in \Lambda, \, \norm{\lambda + u} > L} G_\alpha(\lambda + u)$. By rapid Gaussian decay, $\lim_{L \to \infty} \tau(L) = 0$. Fix $L > 0$ and take $R > L$. For any $x \in C_{R - L}$, the triangle inequality implies that every $y \in C$ with $\norm{x - y} \le L$ satisfies $\norm{y} \le R$, so $y \in C_R$. Thus the inner sum over $y \in C_R \setminus \{x\}$ misses at most points at distance $> L$ in each of the $N$ cosets, so it is at least $e(x) - N \tau(L)$. Restricting the outer sum to $x \in C_{R-L}$ gives
+\noindent \textit{Lower bound:} For any $L > 0$, define the Gaussian tail $\tau(L) = \sup_{u \in \R^2} \sum_{\lambda \in \Lambda, \, \norm{\lambda + u} > L} G_\alpha(\lambda + u)$. By rapid Gaussian decay, $\tau(L) < \infty$ and $\lim_{L \to \infty} \tau(L) = 0$. Fix $L > 0$ and take $R > L$. For any $x \in C_{R - L}$, the triangle inequality implies that every $y \in C$ with $\norm{x - y} \le L$ satisfies $\norm{y} \le R$, so $y \in C_R$. Thus the inner sum over $y \in C_R \setminus \{x\}$ misses at most points at distance $> L$ in each of the $N$ cosets, so it is at least $e(x) - N \tau(L)$. Restricting the outer sum to $x \in C_{R-L}$ (the dropped inner sums are non-negative) gives
 \[
 E_{g_\alpha}(C; R) \ge \frac{1}{N_R(C)} \sum_{x \in C_{R-L}} \left(e(x) - N \tau(L)\right) = \sum_{m=1}^N \frac{n_m(R-L)}{N_R(C)} \left(e_m - N \tau(L)\right).
 \]
@@ -329,32 +352,59 @@ Since $\frac{(R-L)^2}{R^2} \to 1$, we have $\frac{n_m(R-L)}{N_R(C)} \to \frac{1}
 Letting $L \to \infty$ gives $\liminf_{R \to \infty} E_{g_\alpha}(C; R) \ge E_{g_\alpha}^{\text{per}}(C)$, completing the proof.
 \end{proof}
 
-\subsection{Extension to Non-Periodic Competitors and the 2D Magic Function}
+\subsection{What Remains: Non-Periodic Competitors and the 2D Auxiliary Function (Not Proved Here)}
+\label{sec:nonperiodic}
 
-To extend Theorem~\ref{thm:lp_periodic} to \textit{all} locally finite density-one configurations $C \subseteq \R^2$ (without assuming periodicity) and to construct $f_\alpha$ in 2D, the upstream proof performs two major steps:
+Theorem~\ref{thm:lp_periodic} yields the bound only for \emph{periodic} competitors, and only once an auxiliary function $f_\alpha$ is in hand. The upstream theorem requires two further ingredients. The first is a standard result of the literature that we cite rather than reproduce; the second is the whole substance of the upstream claim and is \emph{not} verified in this document.
 
 \begin{enumerate}[label=\textbf{\arabic*.}]
-    \item \textbf{Fourier Comparison on Centred Disks (No Periodicity):} For an arbitrary density-one configuration $C$, one cannot apply periodic Poisson summation directly. Instead, one smears the finite configuration $C_R$ against a smooth radial localization window on the disk $\Bbar(0, R)$ and uses positivity of $\widehat{f_\alpha}(\xi) \ge 0$ in continuous Fourier space $\R^2$:
+    \item \textbf{Step A --- LP bound for arbitrary locally finite configurations (standard, cited).}
+    \begin{proposition}[LP bound, general case \protect{\cite[Prop.~2.2]{CdCI18}}]
+    \label{prop:lp_general}
+    Let $\alpha > 0$ and let $f_\alpha$ satisfy (i)--(ii) of Definition~\ref{def:aux}. Then for every locally finite configuration $C \subseteq \R^2$ of centred density one,
     \[
-    \sum_{x, y \in C_R} f_\alpha(x - y) = \int_{\R^2} \widehat{f_\alpha}(\xi) \abs{\sum_{x \in C_R} e^{-2\pi i \inner{x}{\xi}}}^2 d\xi \ge 0.
+    E_{g_\alpha}(C) \ge \widehat{f_\alpha}(0) - f_\alpha(0).
     \]
-    By comparing the discrete sum against the area integral over the disk and using the asymptotic density $N_R(C) / (\pi R^2) \to 1$ to control the boundary annulus error uniformly, one obtains $E_{g_\alpha}(C) \ge \widehat{f_\alpha}(0) - f_\alpha(0) = \Ecal_{g_\alpha}(A)$ for every locally finite density-one $C$.
-    \item \textbf{Constructing $f_\alpha$ in 2D Without Modular Forms:}
+    \end{proposition}
+    \noindent This is exactly the Cohn--Kumar bound of Theorem~\ref{thm:lp_periodic} extended to non-periodic configurations with the lower energy of Definition~\ref{def:energies}; Cohn and de Courcy-Ireland prove it under even weaker hypotheses (continuity, integrability, and positive-definiteness of the auxiliary function suffice). The mechanism, for the reader who wants to audit the source: Fourier positivity applied to the point masses alone gives only
+    \[
+    \sum_{x, y \in C_R} f_\alpha(x - y) = \int_{\R^2} \widehat{f_\alpha}(\xi) \abs{\sum_{x \in C_R} e^{-2\pi i \inner{x}{\xi}}}^2 d\xi \ge 0,
+    \]
+    i.e.\ the useless bound $E_{g_\alpha}(C; R) \ge -f_\alpha(0)$. The missing term $\widehat{f_\alpha}(0)$ is produced by applying positive-definiteness instead to the \emph{signed} measure
+    \[
+    \nu_R = \sum_{x \in C_R} \delta_x - \mathbf{1}_{\Bbar(0, R)}(x)\, dx
+    \]
+    (the points minus a uniform background of density one). Expanding the non-negative quantity $\iint f_\alpha(x - y)\, d\nu_R(x)\, d\nu_R(y)$ gives
+    \[
+    \sum_{x \neq y \in C_R} f_\alpha(x-y) \;\ge\; -N_R f_\alpha(0) \;+\; 2 \sum_{x \in C_R} \int_{\Bbar(0,R)} f_\alpha(x - y)\, dy \;-\; \iint_{\Bbar(0,R)^2} f_\alpha(x - y)\, dx\, dy,
+    \]
+    where the two integrals equal $N_R \widehat{f_\alpha}(0) + o(R^2)$ and $\pi R^2 \widehat{f_\alpha}(0) + o(R^2)$ respectively (the errors come from the boundary annulus), and the density hypothesis $N_R / (\pi R^2) \to 1$ together with the $\liminf$ absorbs the error terms. The argument is elementary but delicate and is not reproduced here.
+
+    \item \textbf{Step B --- Existence of sharp 2D auxiliary functions (imported, unverified).}
+    \begin{importedclaim}[Sharp 2D auxiliary functions for all Gaussians, \cite{OAI26}]
+    \label{claim:gauss_imported}
+    For every $\alpha > 0$ there exists a radial Schwartz function $f_\alpha : \R^2 \to \R$ satisfying all four conditions (i)--(iv) of Definition~\ref{def:aux}. Consequently (by Proposition~\ref{prop:lp_general} and Step~5 of Theorem~\ref{thm:lp_periodic}), for every $\alpha > 0$ and every locally finite configuration $C \subseteq \R^2$ of centred density one,
+    \begin{equation}
+    \label{eq:gauss_bound}
+    E_{g_\alpha}(C) \ge \widehat{f_\alpha}(0) - f_\alpha(0) = \Ecal_{g_\alpha}(A) = \sum_{a \in A \setminus \{0\}} e^{-\pi \alpha \norm{a}^2}.
+    \end{equation}
+    \end{importedclaim}
+    \noindent This is the entire difficulty of the problem. The description below of how the upstream release constructs $f_\alpha$ is a \emph{description of the upstream argument}, not a verification of it; the construction is AI-generated and has not been peer reviewed~\cite{repo}.
     \begin{itemize}
-        \item \textit{Why 8D and 24D modular forms fail in 2D:} In dimensions $8$ ($E_8$) and $24$ ($\Lambda_{24}$), the squared norms of lattice vectors cover all even integers $2n$. This uniform integer spacing matches the Fourier invariance of modular and quasimodular forms under $SL_2(\Z)$. In 2D, by Proposition~\ref{prop:gram}, the squared norms of $A$ are $\frac{2}{\sqrt{3}} n$ where $n = j^2 + j k + k^2 \in \{1, 3, 4, 7, 9, 12, 13, \dots\}$. Because integers such as $n = 2, 5, 6, 8, 10, 11$ do not occur, the lattice shells have arithmetic gaps, and no modular-form construction is known.
-        \item \textit{Double-zero contact structure:} Since $G_\alpha(x) - f_\alpha(x) \ge 0$ everywhere on $\R^2 \setminus \{0\}$ and vanishes at every lattice shell $a \in A \setminus \{0\}$, every point $a \in A \setminus \{0\}$ is a local minimum of $G_\alpha - f_\alpha$. Thus its gradient vanishes ($\nabla f_\alpha(a) = \nabla G_\alpha(a)$), and as a function of squared radius $t = \norm{x}^2$, $g_\alpha(t) - \tilde{f}_\alpha(t)$ has \textbf{double zeros} at all lattice shells.
-        \item \textit{Sine-product cardinal interpolation and ball arithmetic:} Instead of modular forms, upstream constructs $f_\alpha$ from a \textbf{sine product with double zeros} that directly encodes the periodic contact set, multiplied by simple-pole and double-pole rational factors to prescribe exact values and slopes on the initial shells of $A$ and $A^*$. Applying Gaussian damping and compactly supported spectral measures reduces the verification of $f_\alpha \le G_\alpha$ and $\widehat{f_\alpha} \ge 0$ to finite reference lists handled by positive quadrature and certified via rigorous interval/ball arithmetic (\texttt{python-flint}).
+        \item \textit{Why the 8D and 24D method does not transfer directly to 2D (heuristic):} In dimensions $8$ ($E_8$) and $24$ (the Leech lattice $\Lambda_{24}$), the squared norms of nonzero lattice vectors are exactly the even integers $2n$ with $n \ge 1$ (for $E_8$) and $n \ge 2$ (for $\Lambda_{24}$, which has no vectors of norm $2$). This uniform spacing is what allows the auxiliary functions to be built from modular and quasimodular forms~\cite{Viazovska17, CKMRV22}. In 2D, by Proposition~\ref{prop:gram}, the squared norms of $A$ are $\frac{2}{\sqrt{3}} n$ where $n = j^2 + j k + k^2$ runs over the L\"oschian numbers $\{1, 3, 4, 7, 9, 12, 13, \dots\}$. Because integers such as $n = 2, 5, 6, 8, 10, 11$ do not occur, the lattice shells have arithmetic gaps, and no modular-form construction of a sharp $f_\alpha$ is known. (This is a heuristic explanation of the obstruction, not a theorem.)
+        \item \textit{Double-zero contact structure:} Since $G_\alpha(x) - f_\alpha(x) \ge 0$ everywhere on $\R^2 \setminus \{0\}$ and vanishes at every lattice shell $a \in A \setminus \{0\}$, every point $a \in A \setminus \{0\}$ is a local minimum of $G_\alpha - f_\alpha$. Thus its gradient vanishes ($\nabla f_\alpha(a) = \nabla G_\alpha(a)$), and as a function of squared radius $t = \norm{x}^2$, $g_\alpha(t) - \tilde{f}_\alpha(t)$ has \textbf{double zeros} at all lattice shells (Appendix~\ref{app:sine}).
+        \item \textit{Sine-product cardinal interpolation and ball arithmetic (upstream's construction, as described):} Instead of modular forms, upstream constructs $f_\alpha$ from a \textbf{sine product with double zeros}, multiplied by simple-pole and double-pole rational factors to prescribe exact values and slopes on the initial shells of $A$ and $A^*$. Applying Gaussian damping and compactly supported spectral measures reduces the verification of $f_\alpha \le G_\alpha$ and $\widehat{f_\alpha} \ge 0$ to finite reference lists handled by positive quadrature and certified via rigorous interval/ball arithmetic (\texttt{python-flint}). \textit{Audit note for reviewers:} in the variable $z = \tfrac{\sqrt{3}}{2}\, t$, a squared sine product $\sin^2(\pi z)$ has double zeros at \emph{every} integer $z = n$, not only at the L\"oschian ones; the upstream construction therefore forces contact $f_\alpha = G_\alpha$ at non-lattice shells ($n = 2, 5, 6, \dots$) as well. Extra contact points are permitted by Definition~\ref{def:aux}, but a reviewer should check how the upstream manuscript reconciles them with the dual roots on $A^* = J(A)$ (which has the \emph{same} set of shells) and with $\widehat{f_\alpha} \ge 0$.
     \end{itemize}
 \end{enumerate}
 
 \section{From Gaussians to All Completely Monotone Potentials}
+\label{sec:gauss_to_cm}
 
-Suppose now that for every $\alpha > 0$ and every locally finite configuration $C$ of density one, we have established the Gaussian lower bound
-\begin{equation}
-\label{eq:gauss_bound}
+Assume Imported Claim~\ref{claim:gauss_imported}, i.e.\ the Gaussian lower bound~\eqref{eq:gauss_bound}: for every $\alpha > 0$ and every locally finite configuration $C$ of density one,
+\[
 E_{g_\alpha}(C) \ge \Ecal_{g_\alpha}(A) = \sum_{a \in A \setminus \{0\}} e^{-\pi \alpha \norm{a}^2}.
-\end{equation}
-We now prove that the inequality $\Ecal_g(A) \le E_g(C)$ and attainment $\Ecal_g(A) = E_g(A)$ hold for \textbf{every} admissible (completely monotone) potential $g$.
+\]
+We now prove that the inequality $\Ecal_g(A) \le E_g(C)$ and attainment $\Ecal_g(A) = E_g(A)$ hold for \textbf{every} admissible (completely monotone) potential $g$. Everything in this section is proved in full.
 
 \subsection{The Constant Potential Lemma (\texttt{energy\_one})}
 
@@ -377,8 +427,9 @@ Since $C$ has density one, $N_R(C) \sim \pi R^2 \to \infty$ as $R \to \infty$. T
 \end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:main} via Bernstein's Theorem, Fatou, and Tonelli}
+\label{sec:bernstein}
 
-\begin{theorem}[Bernstein--Hausdorff--Widder Representation]
+\begin{theorem}[Bernstein--Hausdorff--Widder Representation \protect{\cite{Bernstein29}}, \protect{\cite[Ch.~IV]{Widder41}}]
 \label{thm:bernstein}
 Every completely monotone function $g : (0, \infty) \to [0, \infty)$ can be uniquely represented as the Laplace transform of a non-negative Borel measure $\mu$ on $[0, \infty)$:
 \begin{equation}
@@ -386,6 +437,8 @@ Every completely monotone function $g : (0, \infty) \to [0, \infty)$ can be uniq
 g(t) = \int_{[0, \infty)} e^{-\pi \alpha t} \, d\mu(\alpha) \qquad \forall t > 0.
 \end{equation}
 \end{theorem}
+
+\noindent We do not reprove Theorem~\ref{thm:bernstein}; note that $\mu$ may have infinite total mass (e.g.\ $g(t) = t^{-1}$ corresponds to $d\mu(\alpha) = \pi \, d\alpha$), but the Laplace integral converges for every $t > 0$.
 
 \begin{proof}[Complete Proof of Theorem~\ref{thm:main} from the Gaussian Bounds]
 Let $g$ be admissible and let $C$ be locally finite of density one. By Theorem~\ref{thm:bernstein}, write $g(t) = \int_{[0, \infty)} g_\alpha(t) \, d\mu(\alpha)$ where $g_\alpha(t) = e^{-\pi \alpha t}$ and $\mu$ is a non-negative Borel measure on $[0, \infty)$.
@@ -399,7 +452,7 @@ E_g(C; R) = \frac{1}{N_R(C)} \sum_{x \neq y \in C_R} \int_{[0, \infty)} g_\alpha
 \[
 \lim_{n \to \infty} E_g(C; R_n) = \liminf_{R \to \infty} E_g(C; R) = E_g(C).
 \]
-Since $E_{g_\alpha}(C; R_n) \ge 0$ for all $\alpha \ge 0$ and all $n \in \N$, we apply \textbf{Fatou's Lemma} (Theorem~\ref{thm:fatou} in Appendix~\ref{app:measure}) to the sequence of non-negative measurable functions $\alpha \mapsto E_{g_\alpha}(C; R_n)$:
+Since $E_{g_\alpha}(C; R_n) \ge 0$ for all $\alpha \ge 0$ and all $n \in \N$ (and $\alpha \mapsto E_{g_\alpha}(C; R_n)$ is continuous, hence measurable), we apply \textbf{Fatou's Lemma} (Theorem~\ref{thm:fatou} in Appendix~\ref{app:measure}) to the sequence of non-negative measurable functions $\alpha \mapsto E_{g_\alpha}(C; R_n)$:
 \[
 E_g(C) = \lim_{n \to \infty} \int_{[0, \infty)} E_{g_\alpha}(C; R_n) \, d\mu(\alpha) \ge \int_{[0, \infty)} \left(\liminf_{n \to \infty} E_{g_\alpha}(C; R_n)\right) d\mu(\alpha).
 \]
@@ -420,15 +473,15 @@ E_g(C) \ge \int_{[0, \infty)} E_{g_\alpha}(C) \, d\mu(\alpha).
 
 \noindent \textbf{Step 4 (Swapping sum and integral via Tonelli's Theorem):} Since every term $e^{-\pi \alpha \norm{a}^2}$ is non-negative and measurable on the product space $(A \setminus \{0\}) \times (0, \infty)$ (where $A \setminus \{0\}$ carries the counting measure), \textbf{Tonelli's Theorem} (Theorem~\ref{thm:tonelli} in Appendix~\ref{app:measure}) justifies interchanging the series and the integral without any a priori finiteness assumption:
 \[
-\int_{(0, \infty)} \left( \sum_{a \in A \setminus \{0\}} e^{-\pi \alpha \norm{a}^2} \right) d\mu(\alpha) = \sum_{a \in A \setminus \{0\}} \int_{(0, \infty)} e^{-\pi \alpha \norm{a}^2} \, d\mu(\alpha) = \sum_{a \in A \setminus \{0\}} g\left(\norm{a}^2\right) = \Ecal_g(A).
+\int_{(0, \infty)} \left( \sum_{a \in A \setminus \{0\}} e^{-\pi \alpha \norm{a}^2} \right) d\mu(\alpha) = \sum_{a \in A \setminus \{0\}} \int_{(0, \infty)} e^{-\pi \alpha \norm{a}^2} \, d\mu(\alpha) = \sum_{a \in A \setminus \{0\}} g\left(\norm{a}^2\right) = \Ecal_g(A),
 \]
-Thus $E_g(C) \ge \Ecal_g(A)$.
+where the last equality uses $\mu(\{0\}) = 0$ (Case B). Thus $E_g(C) \ge \Ecal_g(A)$.
 
 \noindent \textbf{Step 5 (Attainment on $A$):} Since $A$ is locally finite of density one, applying the bound just proved to $C = A$ gives $\Ecal_g(A) \le E_g(A) = \liminf_{R \to \infty} E_g(A; R)$. Conversely, for every $R > 0$ and every $x \in A_R$, the set $\{y - x : y \in A_R \setminus \{x\}\}$ is a subset of $A \setminus \{0\}$ (because $A$ is a subgroup under subtraction). Since $g \ge 0$,
 \[
 \sum_{y \in A_R \setminus \{x\}} g\left(\norm{x - y}^2\right) \le \sum_{a \in A \setminus \{0\}} g\left(\norm{a}^2\right) = \Ecal_g(A).
 \]
-Averaging over the $N_R(A)$ points $x \in A_R$ gives $E_g(A; R) \le \Ecal_g(A)$ for every $R > 0$. Taking the $\liminf$ as $R \to \infty$ gives $E_g(A) \le \Ecal_g(A)$. Combining the two inequalities yields $E_g(A) = \Ecal_g(A)$.
+Averaging over the $N_R(A)$ points $x \in A_R$ gives $E_g(A; R) \le \Ecal_g(A)$ for every $R > 0$. Taking the $\liminf$ as $R \to \infty$ gives $E_g(A) \le \Ecal_g(A)$. Combining the two inequalities yields $E_g(A) = \Ecal_g(A)$ (in Case A, both sides are $\infty$).
 \end{proof}
 
 \begin{remark}[Upstream's shifted-mixture formalization route]
@@ -436,6 +489,9 @@ In the Lean 4 formalization, to avoid invoking Bernstein's theorem on the open h
 \end{remark}
 
 \section{Complete Proofs of the Four Corollaries (Results D1--D4)}
+\label{sec:corollaries}
+
+Every result in this section is deduced from Theorem~\ref{thm:main}; it therefore inherits the conditional status of that theorem (see the epistemic-status box on page~\pageref{box:status}), but the deductions themselves are complete.
 
 \subsection{Result D1: Riesz Potentials ($V(r) = r^{-s}$)}
 
@@ -557,7 +613,7 @@ Let $c = \sqrt{\rho} > 0$ and define $h_{1/\rho}(t) = h(t/\rho)$, which is admis
 \[
 \Ecal_{h_{1/\rho}}(A) = \sum_{a \in A \setminus \{0\}} h\left(\frac{\norm{a}^2}{\rho}\right) \le E_{h_{1/\rho}}\left(\sqrt{\rho} C\right).
 \]
-By Lemma~\ref{lem:scaling}(iii), $E_{h_{1/\rho}}(\sqrt{\rho} C) = E_{h_{1/\rho}(\rho \cdot)}(C) = E_h(C)$ since $h_{1/\rho}(\rho t) = h(\rho t / \rho) = h(t)$. Finally, applying Lemma~\ref{lem:scaling}(iii) with $c = \rho^{-1/2}$ to $A$ gives $E_h(\rho^{-1/2} A) = E_{h_{1/\rho}}(A) = \Ecal_{h_{1/\rho}}(A)$ by the attainment part of Theorem~\ref{thm:main}.
+By Lemma~\ref{lem:scaling}(iii), $E_{h_{1/\rho}}(\sqrt{\rho} C) = E_{h_{1/\rho}(\rho \cdot)}(C) = E_h(C)$ since $h_{1/\rho}(\rho t) = h(\rho t / \rho) = h(t)$. Finally, $\rho^{-1/2} A$ has density $\rho$ by Lemma~\ref{lem:scaling}(ii) (because $\sqrt{\rho} \cdot \rho^{-1/2} A = A$ has density one), and applying Lemma~\ref{lem:scaling}(iii) with $c = \rho^{-1/2}$ to $A$ gives $E_h(\rho^{-1/2} A) = E_{h_{1/\rho}}(A) = \Ecal_{h_{1/\rho}}(A)$ by the attainment part of Theorem~\ref{thm:main}.
 \end{proof}
 
 \begin{remark}[Negative control: why the factor $\rho^{-1}$ is essential]
@@ -584,7 +640,7 @@ Let $V = A \setminus \{0\}$ be the triangular lattice with one point removed (a 
 \frac{N_R(V)}{\pi R^2} = \frac{N_R(A)}{\pi R^2} - \frac{1}{\pi R^2} \xrightarrow[R \to \infty]{} 1 - 0 = 1.
 \]
 
-\noindent \textbf{(ii) Equality of lower energy:} Let $g$ be admissible. Since $V$ is locally finite of density one by (i), Theorem~\ref{thm:main} immediately gives the lower bound $\Ecal_g(A) \le E_g(V)$. For the upper bound, let $S_V(R)$ and $S_A(R)$ denote the double sums over ordered pairs in $V_R$ and $A_R$, respectively. Since $V_R \subset A_R$ and every term $g(\norm{x - y}^2)$ is non-negative, $S_V(R) \le S_A(R)$. Because $N_R(A) \to \infty$, for all sufficiently large $R$ we have $N_R(A) \ge 2$ and
+\noindent \textbf{(ii) Equality of lower energy:} Let $g$ be admissible. Since $V$ is locally finite of density one by (i), Theorem~\ref{thm:main} immediately gives the lower bound $\Ecal_g(A) \le E_g(V)$. For the upper bound, let $S_V(R)$ and $S_A(R)$ denote the double sums over ordered pairs in $V_R$ and $A_R$, respectively (both finite, since $g$ is real-valued). Since $V_R \subset A_R$ and every term $g(\norm{x - y}^2)$ is non-negative, $S_V(R) \le S_A(R)$. Because $N_R(A) \to \infty$, for all sufficiently large $R$ we have $N_R(A) \ge 2$ and
 \[
 E_g(V; R) = \frac{S_V(R)}{N_R(A) - 1} \le \frac{N_R(A)}{N_R(A) - 1} \cdot \frac{S_A(R)}{N_R(A)} = \kappa(R) E_g(A; R), \quad \text{where } \kappa(R) := \frac{N_R(A)}{N_R(A) - 1} \xrightarrow[R \to \infty]{} 1.
 \]
@@ -608,7 +664,7 @@ Thus $0 = f(2a - b) \in f(A) = V = A \setminus \{0\}$, which is a contradiction.
 \subsection{Result D4: Equivalence of Open and Closed Disks}
 \label{sec:D4}
 
-For a configuration $C \subseteq \R^2$, let $C_R^{\circ} = C \cap \Bopen(0, R)$ and $N_R^{\circ}(C) = \operatorname{card}(C_R^{\circ})$ denote the point set and count in the \textbf{open} disk $\Bopen(0, R) = \{x : \norm{x} < R\}$. Define the open-disk energy $E_g^{\circ}(C; R)$ and lower open-disk energy $E_g^{\circ}(C) = \liminf_{R \to \infty} E_g^{\circ}(C; R)$ identically to Definition~1.7 using $C_R^{\circ}$.
+For a configuration $C \subseteq \R^2$, let $C_R^{\circ} = C \cap \Bopen(0, R)$ and $N_R^{\circ}(C) = \operatorname{card}(C_R^{\circ})$ denote the point set and count in the \textbf{open} disk $\Bopen(0, R) = \{x : \norm{x} < R\}$. Define the open-disk energy $E_g^{\circ}(C; R)$ and lower open-disk energy $E_g^{\circ}(C) = \liminf_{R \to \infty} E_g^{\circ}(C; R)$ identically to Definition~\ref{def:energies} using $C_R^{\circ}$.
 
 \begin{lemma}[Point-set comparison between open and closed disks]
 \label{lem:open_closed_sets}
@@ -646,7 +702,7 @@ Fix any threshold $X \in \R$ and set $m_X = \inf_{r \ge X} u(r)$. Since $\gamma(
 
 \begin{theorem}[Result D4: Open vs.\ closed disk equivalence]
 \label{thm:D4}
-Let $C \subseteq \R^2$ be locally finite, $\rho > 0$, and $g : \R \to \R$ any function. Then:
+Let $C \subseteq \R^2$ be locally finite, $\rho > 0$, and let $g : (0, \infty) \to [0, \infty)$ be any function (no smoothness or monotonicity is needed). Then:
 \begin{enumerate}[label=(\roman*)]
     \item $C$ has closed-disk density $\rho$ ($\lim_{R \to \infty} \frac{N_R(C)}{\pi R^2} = \rho$) if and only if $C$ has open-disk density $\rho$ ($\lim_{R \to \infty} \frac{N_R^{\circ}(C)}{\pi R^2} = \rho$);
     \item The open-disk and closed-disk lower energies coincide: $E_g^{\circ}(C) = E_g(C)$.
@@ -658,7 +714,7 @@ Let $C \subseteq \R^2$ be locally finite, $\rho > 0$, and $g : \R \to \R$ any fu
 \[
 \frac{N_{R-1}(C)}{\pi (R-1)^2} \cdot \frac{(R-1)^2}{R^2} \le \frac{N_R^{\circ}(C)}{\pi R^2} \le \frac{N_R(C)}{\pi R^2} \le \frac{N_{R+1}^{\circ}(C)}{\pi (R+1)^2} \cdot \frac{(R+1)^2}{R^2}.
 \]
-Since $\frac{(R \pm 1)^2}{R^2} \to 1$ as $R \to \infty$, the Squeeze Theorem (*Th\'eor\`eme des gendarmes*) immediately implies that $\frac{N_R(C)}{\pi R^2} \to \rho \iff \frac{N_R^{\circ}(C)}{\pi R^2} \to \rho$.
+Since $\frac{(R \pm 1)^2}{R^2} \to 1$ as $R \to \infty$, the Squeeze Theorem (\textit{Th\'eor\`eme des gendarmes}) immediately implies that $\frac{N_R(C)}{\pi R^2} \to \rho \iff \frac{N_R^{\circ}(C)}{\pi R^2} \to \rho$.
 
 \noindent \textbf{(ii) Lower energy equivalence:} Because the disk energy depends on the radius $R$ solely through the finite point set inside the disk, Lemma~\ref{lem:open_closed_sets} gives, for every $R \in \R$,
 \[
@@ -719,7 +775,7 @@ Let $\Lambda \subset \R^2$ be a lattice of covolume $\abs{\Lambda}$ and let $v \
 \]
 \end{lemma}
 \begin{proof}
-The disjoint translates $\{x + D : x \in \Lambda + v\}$ tile $\R^2$, and each tile has area $\operatorname{Area}(D) = \abs{\Lambda}$. For every $x \in (\Lambda + v) \cap \Bbar(0, R)$, the triangle inequality shows $x + D \subseteq \Bbar(0, R + \delta)$; conversely, the disk $\Bbar(0, R - \delta)$ is completely covered by those tiles $x + D$ with $x \in (\Lambda + v) \cap \Bbar(0, R)$. Comparing the total areas yields $\pi(R - \delta)^2 \le n(R) \abs{\Lambda} \le \pi(R + \delta)^2$.
+The disjoint translates $\{x + D : x \in \Lambda + v\}$ tile $\R^2$, and each tile has area $\operatorname{Area}(D) = \abs{\Lambda}$. Since $0 \in D$, every $d \in D$ satisfies $\norm{d} \le \delta$. For every $x \in (\Lambda + v) \cap \Bbar(0, R)$, the triangle inequality shows $x + D \subseteq \Bbar(0, R + \delta)$; conversely, the disk $\Bbar(0, R - \delta)$ is completely covered by those tiles $x + D$ with $x \in (\Lambda + v) \cap \Bbar(0, R)$. Comparing the total areas yields $\pi(R - \delta)^2 \le n(R) \abs{\Lambda} \le \pi(R + \delta)^2$.
 \end{proof}
 
 \section{Limit Inferior ($\liminf$), Limit Superior ($\limsup$), and $[0, \infty]$}
@@ -732,7 +788,7 @@ For a function $F : (0, \infty) \to [0, \infty]$ (such as the disk energy $F(R) 
 \[
 I(R_0) := \inf_{R \ge R_0} F(R), \qquad S(R_0) := \sup_{R \ge R_0} F(R).
 \]
-As the starting radius $R_0$ increases, the set $[R_0, \infty)$ shrinks! Therefore:
+As the starting radius $R_0$ increases, the set $[R_0, \infty)$ shrinks. Therefore:
 \begin{itemize}
     \item $R_0 \mapsto I(R_0)$ is \textbf{monotone increasing}, so it always has a limit in $[0, \infty]$ as $R_0 \to \infty$ (namely its supremum):
     \[
@@ -746,7 +802,7 @@ As the starting radius $R_0$ increases, the set $[R_0, \infty)$ shrinks! Therefo
 We always have $\liminf_{R \to \infty} F(R) \le \limsup_{R \to \infty} F(R)$, with equality if and only if $\lim_{R \to \infty} F(R)$ exists in $[0, \infty]$.
 
 \subsection{Why $\liminf$ Is Super-Additive (and Why Equality Fails)}
-A crucial point in Section~3.2 is that $\liminf$ is \textbf{super-additive}, not linear: for any two non-negative functions $u, w$,
+A crucial point in Section~\ref{sec:bernstein} is that $\liminf$ is \textbf{super-additive}, not linear: for any two non-negative functions $u, w$,
 \begin{equation}
 \label{eq:superadd}
 \liminf_{R \to \infty} \left(u(R) + w(R)\right) \ge \liminf_{R \to \infty} u(R) + \liminf_{R \to \infty} w(R).
@@ -754,7 +810,7 @@ A crucial point in Section~3.2 is that $\liminf$ is \textbf{super-additive}, not
 \begin{proof}
 For every $R \ge R_0$, $u(R) + w(R) \ge \inf_{r \ge R_0} u(r) + \inf_{r \ge R_0} w(r)$. Taking the infimum over $R \ge R_0$ on the left and letting $R_0 \to \infty$ gives \eqref{eq:superadd}.
 \end{proof}
-\noindent \textbf{Counterexample to equality:} Take $u_n = 1 + (-1)^n$ (which alternates $2, 0, 2, 0, \dots$) and $w_n = 1 - (-1)^n$ (which alternates $0, 2, 0, 2, \dots$). Then $\liminf u_n = 0$ and $\liminf w_n = 0$, whereas $u_n + w_n = 2$ for all $n$, so $\liminf(u_n + w_n) = 2 > 0 + 0$. Notice that the inequality \eqref{eq:superadd} goes in the \textbf{exact direction we need} to bound $E_g(C)$ from below!
+\noindent \textbf{Counterexample to equality:} Take $u_n = 1 + (-1)^n$ (which alternates $2, 0, 2, 0, \dots$) and $w_n = 1 - (-1)^n$ (which alternates $0, 2, 0, 2, \dots$). Then $\liminf u_n = 0$ and $\liminf w_n = 0$, whereas $u_n + w_n = 2$ for all $n$, so $\liminf(u_n + w_n) = 2 > 0 + 0$. Notice that the inequality \eqref{eq:superadd} goes in the \textbf{exact direction we need} to bound $E_g(C)$ from below.
 
 \section{From \textit{Math Sp\'e} Riemann Integrals to Measure Theory, Fatou, and Tonelli}
 \label{app:measure}
@@ -848,16 +904,17 @@ Let $\Lambda \subset \R^2$ be a lattice of covolume $\abs{\Lambda}$ and let $f \
 \end{theorem}
 \begin{proof}
 Consider the periodized function $F(v) = \sum_{\lambda \in \Lambda} f(\lambda + v)$. Because $f \in \Scal(\R^2)$, the series and all its term-by-term partial derivatives converge normally on compact subsets of $\R^2$, so $F$ is $C^\infty$ and $\Lambda$-periodic ($F(v + \lambda) = F(v)$ for all $\lambda \in \Lambda$). Just as a 1D $T$-periodic function is expanded in harmonics $e^{2\pi i n x / T}$, a $\Lambda$-periodic function on $\R^2/\Lambda$ is expanded in the orthogonal basis of characters $\{v \mapsto e^{2\pi i \inner{w}{v}} : w \in \Lambda^*\}$. Its Fourier coefficient at frequency $w \in \Lambda^*$ over a fundamental domain $D$ of area $\abs{\Lambda}$ is
-\[
-c_w(F) = \frac{1}{\abs{\Lambda}} \int_D F(v) e^{-2\pi i \inner{w}{v}} \, dv = \frac{1}{\abs{\Lambda}} \sum_{\lambda \in \Lambda} \int_D f(\lambda + v) e^{-2\pi i \inner{w}{\lambda + v}} \, dv = \frac{1}{\abs{\Lambda}} \int_{\R^2} f(x) e^{-2\pi i \inner{w}{x}} \, dx = \frac{\widehat{f}(w)}{\abs{\Lambda}},
-\]
+\begin{align*}
+c_w(F) &= \frac{1}{\abs{\Lambda}} \int_D F(v) e^{-2\pi i \inner{w}{v}} \, dv = \frac{1}{\abs{\Lambda}} \sum_{\lambda \in \Lambda} \int_D f(\lambda + v) e^{-2\pi i \inner{w}{\lambda + v}} \, dv \\
+&= \frac{1}{\abs{\Lambda}} \int_{\R^2} f(x) e^{-2\pi i \inner{w}{x}} \, dx = \frac{\widehat{f}(w)}{\abs{\Lambda}},
+\end{align*}
 where we used $\inner{w}{\lambda} \in \Z \implies e^{-2\pi i \inner{w}{\lambda}} = 1$ and the tiling $\R^2 = \bigsqcup_{\lambda \in \Lambda} (\lambda + D)$. Since $F$ is $C^\infty$, its Fourier series converges absolutely to $F(v)$ for every $v \in \R^2$, yielding the formula.
 \end{proof}
 
 \section{Double Zeros and Sine-Product Cardinal Interpolation}
 \label{app:sine}
 
-Why does the 2D auxiliary function $f_\alpha$ use a \textbf{sine product with double zeros}?
+Why does the 2D auxiliary function $f_\alpha$ (as described by upstream) use a \textbf{sine product with double zeros}?
 
 \subsection{Why Minorants Must Have Double Zeros at Contact Points}
 \begin{proposition}[First-order tangency at lattice shells]
@@ -877,23 +934,25 @@ In classical analysis, Euler's infinite product for the sine function is
 \]
 which has simple zeros at every integer $z \in \Z$. Squaring this function gives $\sin^2(\pi z)$, which has \textbf{double zeros} at every integer $z = n \in \Z$ and remains $\ge 0$ for all real $z \in \R$.
 \begin{itemize}
-    \item If we divide $\sin^2(\pi z)$ by $(z - n)^2$, we obtain the Fej\'er / cardinal spline kernel $\left(\frac{\sin(\pi(z - n))}{\pi(z - n)}\right)^2$, which equals $1$ with derivative $0$ at $z = n$, and equals $0$ with derivative $0$ at every other integer $m \neq n$.
-    \item Multiplying $\sin^2(\pi z)$ by simple-pole factors $\frac{1}{z - n}$ and double-pole factors $\frac{1}{(z - n)^2}$ allows one to construct an entire function (Hermite--Fej\'er cardinal interpolant) that takes \textbf{prescribed values and prescribed first derivatives} at any finite reference list of nodes, while maintaining double zeros and a controlled sign at all remaining nodes!
+    \item If we divide $\sin^2(\pi z)$ by $\pi^2 (z - n)^2$, we obtain the Fej\'er kernel $\left(\frac{\sin(\pi(z - n))}{\pi(z - n)}\right)^2$, which equals $1$ with derivative $0$ at $z = n$, and equals $0$ with derivative $0$ at every other integer $m \neq n$.
+    \item Multiplying $\sin^2(\pi z)$ by simple-pole factors $\frac{1}{z - n}$ and double-pole factors $\frac{1}{(z - n)^2}$ allows one to construct an entire function (Hermite--Fej\'er cardinal interpolant) that takes \textbf{prescribed values and prescribed first derivatives} at any finite reference list of nodes, while maintaining double zeros and a controlled sign at all remaining nodes.
 \end{itemize}
-In OpenAI's 2D proof, because the triangular lattice shells $n = j^2 + j k + k^2$ are a subset of the integers $\N$, this sine-product cardinal interpolation (combined with Gaussian damping and certified finite quadrature) replaces the modular forms of dimensions $8$ and $24$.
+In the upstream 2D argument, because the triangular lattice shells $n = j^2 + j k + k^2$ form a subset of the integers $\N$, this sine-product cardinal interpolation (combined with Gaussian damping and certified finite quadrature) is used in place of the modular forms of dimensions $8$ and $24$. As noted in Section~\ref{sec:nonperiodic}, the product also places double zeros at the non-L\"oschian integers; whether and how the upstream construction accounts for this is one of the points a reviewer of the upstream manuscript should check.
 
 \section{Printable Pen-and-Paper Review Checklist}
 
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabular}{@{}p{2.2cm}p{5.0cm}p{5.2cm}p{2.8cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{2.8cm}@{}}
 \toprule
 \textbf{Section} & \textbf{Mathematical Claim} & \textbf{Key Mechanism to Verify} & \textbf{Reviewer Sign-off} \\
 \midrule
 Prop.~\ref{prop:gram} \& \ref{prop:dual_A} & $\abs{A} = 1$, $\norm{p(j,k)}^2 = \frac{2}{\sqrt{3}}(j^2+jk+k^2)$, and $A^* = JA$. & Matrix determinant $\det(v_1, v_2) = 1$ and biorthogonality $\inner{Jv_m}{v_n} \in \Z$. & $\square$ Verified \\[0.6em]
 Thm.~\ref{thm:lp_periodic} & Periodic LP bound $E_{g_\alpha}^{\text{per}}(C) \ge \widehat{f_\alpha}(0) - f_\alpha(0) = \Ecal_{g_\alpha}(A)$. & Minorant $f_\alpha \le G_\alpha$, diagonal $N f_\alpha(0)$, 2D Poisson summation, $\widehat{f_\alpha} \ge 0$. & $\square$ Verified \\[0.6em]
 Prop.~\ref{prop:periodic_disk} & Periodic disk energy converges: $\lim_{R\to\infty} E_{g_\alpha}(C; R) = E_{g_\alpha}^{\text{per}}(C)$. & Annulus cut $C_{R-L}$ and Gaussian tail bound $\tau(L) \to 0$. & $\square$ Verified \\[0.6em]
+Prop.~\ref{prop:lp_general} & LP bound for \emph{arbitrary} locally finite $C$ (cited). & Positive-definiteness applied to points minus uniform background; check against \cite[Prop.~2.2]{CdCI18}. & $\square$ Checked against source \\[0.6em]
+Claim~\ref{claim:gauss_imported} & Sharp 2D $f_\alpha$ exists for every $\alpha > 0$ (\textbf{imported, unverified}). & Upstream sine-product construction and ball-arithmetic certificates; \emph{cannot} be verified from this document. & $\square$ Upstream audit pending \\[0.6em]
 Thm.~\ref{thm:main} & Passage from Gaussians $G_\alpha$ to all completely monotone $g$. & Fatou's Lemma along $(R_n)$, atom at $\alpha=0$ (\texttt{energy\_one}), Tonelli's Theorem. & $\square$ Verified \\[0.6em]
 Result D1 \& D1b & Riesz $r^{-s}$ admissibility ($s > 0$) and finiteness ($\iff s > 2$). & Pochhammer identity $(-\sigma)_r^\downarrow = (-1)^r (\sigma)_r^\uparrow$ and shell bound $\sum 8n \cdot n^{-s}$. & $\square$ Verified \\[0.6em]
 Result D2 (Thm.~\ref{thm:D2}) & Optimality of $\rho^{-1/2} A$ at arbitrary density $\rho > 0$. & Bijection $(cC)_R = c(C_{R/c})$, energy scaling $E_h(cC) = E_{h(c^2 \cdot)}(C)$. & $\square$ Verified \\[0.6em]
@@ -903,5 +962,29 @@ Result D4 (Thm.~\ref{thm:D4}) & Open disks $\Bopen(0, R)$ and closed disks $\Bba
 \end{tabular}
 \caption{Pen-and-paper review checklist for auditing the human proofs alongside the Lean 4 formalization.}
 \end{table}
+
+\begin{thebibliography}{CKMRV22}
+
+\bibitem[Ber29]{Bernstein29} S. Bernstein, \emph{Sur les fonctions absolument monotones}, Acta Math.\ \textbf{52} (1929), 1--66.
+
+\bibitem[CK07]{CK07} H. Cohn and A. Kumar, \emph{Universally optimal distribution of points on spheres}, J. Amer.\ Math.\ Soc.\ \textbf{20} (2007), 99--148.
+
+\bibitem[CdCI18]{CdCI18} H. Cohn and M. de Courcy-Ireland, \emph{The Gaussian core model in high dimensions}, Duke Math.\ J. \textbf{167} (2018), 2417--2455. arXiv:1603.09684. (Proposition 2.2 is the linear-programming bound for arbitrary configurations with the lower energy.)
+
+\bibitem[CKMRV22]{CKMRV22} H. Cohn, A. Kumar, S. D. Miller, D. Radchenko, and M. Viazovska, \emph{Universal optimality of the $E_8$ and Leech lattices and interpolation formulas}, Ann.\ of Math.\ (2) \textbf{196} (2022), 983--1082.
+
+\bibitem[Leb25]{Leble25} T. Lebl\'e, \emph{The hexagonal lattice is universally locally optimal}, arXiv:2511.03353 (November 2025). (Describes the global 2D universal optimality conjecture as a major open problem.)
+
+\bibitem[Mon88]{Montgomery88} H. L. Montgomery, \emph{Minimal theta functions}, Glasgow Math.\ J. \textbf{30} (1988), 75--85. (Universal optimality of $A$ among \emph{lattices}.)
+
+\bibitem[OAI26]{OAI26} \texttt{openai/math} repository, theorem \texttt{OAI.\allowbreak AtomicTriangular.\allowbreak universal\_energy\_minimum}, commit \texttt{adc7f124} (October 2026). AI-generated proof and manuscript; Lean-kernel-checked against the release's own definitions; not peer reviewed.
+
+\bibitem[Via17]{Viazovska17} M. Viazovska, \emph{The sphere packing problem in dimension 8}, Ann.\ of Math.\ (2) \textbf{185} (2017), 991--1015.
+
+\bibitem[Wid41]{Widder41} D. V. Widder, \emph{The Laplace Transform}, Princeton University Press, 1941.
+
+\bibitem[XC26]{repo} \texttt{xaviercallens/triangular-universal-optimality-lean}, \emph{Conditional corollaries of an AI-generated \texttt{openai/math} theorem, not a proof of the conjecture}, GitHub (2026), \url{https://github.com/xaviercallens/triangular-universal-optimality-lean}. Zenodo: \texttt{10.5281/zenodo.23285631} (D1, D1b, D2) and \texttt{10.5281/zenodo.23293429} (D3).
+
+\end{thebibliography}
 
 \end{document}
