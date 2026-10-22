@@ -85,10 +85,10 @@ Complete Pen-and-Paper Proofs (D1--D4), and \textit{Math Sup / Math Sp\'e} Refer
 
 
 \section*{Red-Team \& Formal Specification Audit Guide (For Dr.\ Fran\c{c}ois Hantry)}
-\addcontentsline{toc}{section}{Red-Team \& Formal Specification Audit Guide (B-Method, Vacuity \& Causal MUS Lens)}
+\addcontentsline{toc}{section}{Red-Team \& Formal Specification Audit Guide (Vacuity, MU/MF-Search, LTL Modalities \& B-Method)}
 
 \noindent \textbf{Why a Formal-Methods \& Causality Lens Is Essential Here.}
-When an automated prover or AI system discharges a 9,500-line proof in Lean~4 (\texttt{lake build} exit code~$0$), the epistemological situation is identical to an \textbf{Atelier~B} development in which all internal Proof Obligations (POs) of an \texttt{IMPLEMENTATION} machine are discharged automatically, while the top-level \textbf{Abstract Machine (\texttt{SPECIFICATION})} has never been audited by a human domain engineer. As highlighted by the October~7, 2026 withdrawal of three \texttt{openai/math} algebraic geometry manuscripts after human inspection, a machine-checked proof can fail to establish its intended mathematical claim through three classic formal-verification failure modes that mirror \textbf{Linear Temporal Logic (LTL) vacuity}, \textbf{Minimal Unsatisfiable Core (MUS) collapse}, and \textbf{B-Method Well-Definedness (\texttt{WD}) totalization traps}:
+When an automated prover or AI system discharges a 9,500-line proof in Lean~4 (\texttt{lake build} exit code~$0$), the epistemological situation is identical to an \textbf{Atelier~B} development in which all internal Proof Obligations (POs) of an \texttt{IMPLEMENTATION} machine are discharged automatically, while the top-level \textbf{Abstract Machine (\texttt{SPECIFICATION})} has never been audited by a human domain engineer. As highlighted by the October~7, 2026 withdrawal of three \texttt{openai/math} algebraic geometry manuscripts after human inspection, a machine-checked proof can fail to establish its intended mathematical claim through four formal-verification failure modes directly connected to Dr.\ Fran\c{c}ois Hantry's research on \textbf{Inherent Vacuity Checking and Minimal Unsatisfiable/Minimal False Search (\texttt{MU-search} / \texttt{MF-search})}~\cite{HHS12}, \textbf{Conflict-Driven Unsatisfiable Core Extraction for Compliance Debugging}~\cite{HH11}, and \textbf{B-Method Well-Definedness (\texttt{WD}) \& Refinement Proof Obligations}:
 
 \begin{enumerate}[leftmargin=*, label=\textbf{Failure Mode \arabic*:}]
     \item \textbf{Totalization \& ``Junk-Value'' Satisfaction (Missing \texttt{WD} Proof Obligations):}
@@ -99,10 +99,18 @@ When an automated prover or AI system discharges a 9,500-line proof in Lean~4 (\
     \end{itemize}
     Consequently, \textbf{Result~D1b} ($\Ecal_{g_s}(A) < \infty \iff s > 2$, Theorem~\ref{thm:riesz_finite}) is not merely an analytic corollary: in formal-verification terms, it is the mandatory \textbf{Non-Vacuity / Well-Definedness (\texttt{WD}) Witness} certifying that Theorem~\ref{thm:main} and Result~D1 are not discharged as $\infty \le \infty$.
 
-    \item \textbf{Causal Non-Vacuity \& Minimal Unsatisfiable Core (MUS) Mutation Testing:}
-    In causal diagnosis of formal specifications (cf.\ Hantry \emph{et al.}, LTL causality and minimal unsatisfiable formulas), a hypothesis $H_i$ in a theorem $H_1 \wedge \dots \wedge H_k \vdash \Phi$ is causally active if and only if mutating or dropping $H_i$ yields a satisfiable counter-model $\neg H_i \wedge \bigwedge_{j \neq i} H_j \wedge \neg \Phi$. Table~\ref{tab:causal_mus} below maps every core hypothesis of our Lean~4 development to its kernel-checked \textbf{Negative Control (counter-theorem)}, proving that none of the definitions are vacuous.
+    \item \textbf{Inherent Vacuity Checking \& Minimal Unsatisfiable / Minimal False Search (\texttt{MU-search} / \texttt{MF-search}, \cite{HHS12}):}
+    In Hantry, Sa\"is, and Hacid~\cite{HHS12} (\emph{arXiv:1203.3706}), a formal specification $\Phi = (H_1 \wedge \dots \wedge H_k \Rightarrow \psi)$ passes \textbf{Inherent Non-Vacuity Checking} only if no subformula $H_i$ is redundant or trivially satisfied, which is certified by solving the dual \textbf{Minimal Unsatisfiable (\texttt{MU-search})} / \textbf{Minimal False (\texttt{MF-search})} problem: exhibiting for each hypothesis $H_i$ a concrete counter-witness satisfying $\neg H_i \wedge \bigwedge_{j \neq i} H_j \wedge \neg \psi$. Table~\ref{tab:causal_mus} below maps every core hypothesis of our Lean~4 development to its kernel-checked \textbf{Inherent Non-Vacuity / \texttt{MF-search} Counter-Witness}, proving that none of the definitions or hypotheses are vacuous.
 
-    \item \textbf{Specification Refinement Gap \& Over-Constrained Interpolation in Imported Claim~\ref{claim:gauss_imported}:}
+    \item \textbf{Quantifier Alternation ($\forall\exists$ vs.\ $\exists\forall$) and LTL Modalities (\texttt{GF} \emph{Infinitely Often} vs.\ \texttt{FG} \emph{Eventually Always}, \cite{HHS12}):}
+    A central result of~\cite{HHS12} is that quantifier alternation in QBF/LTL drives the \texttt{PSPACE}/\texttt{FPSPACE} complexity of vacuity detection. That exact quantifier alternation appears in Definition~\ref{def:energies} of the asymptotic pair energy along the radial trace $R \to \infty$:
+    \begin{itemize}[nosep]
+        \item \textbf{Lower energy ($\liminf_{R\to\infty} E_g(C; R) \le B$)} is the LTL \textbf{\texttt{GF} ($\Box\Diamond$, \emph{Infinitely Often})} modality with $\forall\exists$ alternation: $\forall \varepsilon > 0,\; \forall R_0 > 0,\; \exists R \ge R_0,\; E_g(C; R) \le B + \varepsilon$.
+        \item \textbf{Upper/limit energy ($\limsup_{R\to\infty} E_g(C; R) \le B$, as in CKMRV Def.~1.2--1.3~\cite{CKMRV22})} is the stronger LTL \textbf{\texttt{FG} ($\Diamond\Box$, \emph{Eventually Always})} modality with $\exists\forall$ alternation: $\forall \varepsilon > 0,\; \exists R_0 > 0,\; \forall R \ge R_0,\; E_g(C; R) \le B + \varepsilon$.
+    \end{itemize}
+    In Step~2 of Theorem~\ref{thm:main} (Eq.~\eqref{eq:fatou_step}), choosing a subsequence $R_n \to \infty$ that realizes $\lim_{n\to\infty} E_g(C; R_n) = \liminf_{R\to\infty} E_g(C; R)$ is a \textbf{Skolemization} of the $\forall R_0 \, \exists R$ quantifier for a \emph{fixed} potential $g$. Because the Skolem witness $(R_n)$ depends on $g$, it does not necessarily realize $\liminf_{R\to\infty} E_{g_\alpha}(C; R)$ for each individual Gaussian $g_\alpha$; Fatou's Lemma bridges the quantifier swap precisely because $\liminf_{n\to\infty} E_{g_\alpha}(C; R_n) \ge \liminf_{R\to\infty} E_{g_\alpha}(C; R)$ holds point-wise for every $\alpha > 0$.
+
+    \item \textbf{Conflict-Driven Unsatisfiable Core Analysis (\cite{HH11}) of Imported Claim~\ref{claim:gauss_imported}:}
     Section~\ref{sec:nonperiodic} isolates the single unverified component of the upstream \texttt{openai/math} release: the construction of a sharp 2D Gaussian auxiliary function $f_\alpha$ (Imported Claim~\ref{claim:gauss_imported}). From a constraint-satisfaction perspective, a radial function $f_\alpha(x) = \tilde{f}_\alpha(\norm{x}^2)$ must simultaneously satisfy:
     \[
     \underbrace{\tilde{f}_\alpha(t) \le e^{-\pi \alpha t} \;\; (\forall t > 0)}_{\text{spatial minorant}}, \qquad
@@ -1022,6 +1030,10 @@ Result D4 (Thm.~\ref{thm:D4}) & Open disks $\Bopen(0, R)$ and closed disks $\Bba
 \begin{thebibliography}{CKMRV22}
 
 \bibitem[Ber29]{Bernstein29} S. Bernstein, \emph{Sur les fonctions absolument monotones}, Acta Math.\ \textbf{52} (1929), 1--66.
+
+\bibitem[HH11]{HH11} F. Hantry and M.-S. Hacid, \emph{Handling Conflicts in Depth-First Search for LTL Tableau to Debug Compliance Based Languages}, arXiv:1109.2656 (September 2011).
+
+\bibitem[HHS12]{HHS12} F. Hantry, L. Sa\"is, and M.-S. Hacid, \emph{On the Complexity of Computing Minimal Unsatisfiable LTL formulas}, arXiv:1203.3706 (March 2012). (Establishes \texttt{FPSPACE}-completeness of \texttt{MF-search}, \texttt{MU-search}, and Inherent Non-Vacuous formula search, and \texttt{PSPACE}-hardness of Inherent Vacuity Checking.)
 
 \bibitem[CK07]{CK07} H. Cohn and A. Kumar, \emph{Universally optimal distribution of points on spheres}, J. Amer.\ Math.\ Soc.\ \textbf{20} (2007), 99--148.
 
